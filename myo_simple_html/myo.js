@@ -228,6 +228,8 @@
 			myo.direction = data.x_direction;
 			myo.warmupState = data.warmup_state;
 			myo.synced = true;
+			data.synced = true;
+			myo.trigger('arm_synced_status', data, data.timestamp);
 			return true;
 		},
 		'arm_unsynced' : function(myo, data){
@@ -235,6 +237,11 @@
 			myo.direction = undefined;
 			myo.warmupState = undefined;
 			myo.synced = false;
+			data.arm = undefined;
+			data.direction = undefined;
+			data.warmupState = undefined;
+			data.synced = false;
+			myo.trigger('arm_unsynced_status', data, data.timestamp);
 			return true;
 		},
 		'connected' : function(myo, data){
@@ -248,10 +255,14 @@
 		},
 		'locked' : function(myo, data){
 			myo.locked = true;
+			data.locked = true;
+			myo.trigger('locked_status', data, data.timestamp);
 			return true;
 		},
 		'unlocked' : function(myo, data){
 			myo.locked = false;
+			data.locked = false;
+			myo.trigger('locked_status', data, data.timestamp);
 			return true;
 		},
 		'warmup_completed' : function(myo, data){
