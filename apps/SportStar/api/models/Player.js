@@ -12,9 +12,9 @@ var PlayerSchema = new Schema({
         type: String,
         required: 'Kindly enter the email of the player'
     },
-    ageRange:{
+    age:{
         type: Number,
-        required: 'Kindly enter the age range of the player'
+        required: 'Kindly enter the age of the player'
 
     },
     password:{
@@ -28,6 +28,14 @@ var PlayerSchema = new Schema({
             enum: ['left', 'right']
         }],
         default: ['right']
+    },
+    height: {
+        type: Number,
+        required: 'Kindly enter the height of the player'
+    },
+    weight: {
+        type: Number,
+        required: 'Kindly enter the weight of the player'
     }
 });
 

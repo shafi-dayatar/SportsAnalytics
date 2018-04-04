@@ -1,0 +1,73 @@
+<html>
+	<head>
+		<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/flot/0.8.3/jquery.flot.min.js"></script>
+		<script src='../js/bootstrap.bundle.min.js'></script>
+		<script src='../js/bootstrap.min.js'></script>
+		<script src='../js/myo.js'></script>
+
+		<!--<script src='deviceGraphs.js'></script>-->
+		<script src='emg.js'></script>
+
+		<link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap-reboot.min.css" />
+		<link rel="stylesheet" type="text/css" href="../css/bootstrap-grid.min.css" />
+		<link rel="stylesheet" type="text/css" href="style.css" />
+		
+
+
+		<title>EMG Data collection - Myo.js</title>
+	</head>
+	<body>
+		<div class="col-md-12">
+
+			<div class="row">
+				<div class="col-md-12 text-center control-group"> 
+				    <button type="button" id="connect" class="btn btn-primary btn-lg">Connect Myo Armband</button>
+				     <button type="button" id="disconnect" class="btn btn-primary btn-lg">Disconnect Myo Armband</button>
+				</div>
+			</div>
+			<div class="spacer5"></div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<button type="button" id="FBevel2" class="btn btn-primary btn-lg">The Continental Grip  (Bevel #2)</button>
+					<button type="button" id="FBevel3" class="btn btn-primary btn-lg">The Eastern Forehand Grip (Bevel #3)</button>
+				</div>
+			</div>
+			<div class="spacer5"></div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<button type="button" id="FBevel4" class="btn btn-primary btn-lg">The Semi-Western Forehand Grip (Bevel #4)</button>
+					<button type="button" id="FBevel5" class="btn btn-primary btn-lg">The Western Forehand Grip (Bevel #5)</button>
+					
+				</div>
+			</div>
+
+			<div class="spacer5"></div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<button type="button" id="BBevel1" class="btn btn-primary btn-lg">The Eastern Backhand Grip (Bevel #1)</button>
+					<button type="button" id="BBevel8" class="btn btn-primary btn-lg">The Semi-Western Backhand grip (Bevel #8)</button>
+					<button type="button" id="BBevel6" class="btn btn-primary btn-lg">The Double-Handed Backhand Grip (F: Bevel #2 + B: Bevel #6)</button>
+
+				</div>
+			</div>
+			<div class="spacer5"></div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<button type="button" id="fist" class="btn btn-primary btn-lg">Fist</button>
+					<button type="button" id="openFingers" class="btn btn-primary btn-lg">Open Fingers</button>
+					<button type="button" id="waveLeft" class="btn btn-primary btn-lg">Wave Left</button>
+					<button type="button" id="waveRight" class="btn btn-primary btn-lg">Wave Right</button>
+				</div>
+			</div>
+			<div class="spacer5"></div>
+			<div class="row">
+				<div class="col-md-12 text-center">
+					<button type="button" id="NoGrip" class="btn btn-primary btn-lg">No Grip</button>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
