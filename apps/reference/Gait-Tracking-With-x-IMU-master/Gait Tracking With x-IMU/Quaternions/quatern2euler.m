@@ -15,3 +15,11 @@ function euler = quatern2euler(q)
     euler = [phi(1,:)' theta(1,:)' psi(1,:)']; 
 end
 
+    double sqw = q1.w*q1.w;
+    double sqx = q1.x*q1.x;
+    double sqy = q1.y*q1.y;
+    double sqz = q1.z*q1.z;
+
+2 * q[:,2] * q[:,3] - q(:,1) * q(:,2);
+2 * q[:,1]^2 - 1 + 2 * q[:,4]^2;
+2*q1.y*q1.w-2*q1.x*q1.z , sqx - sqy - sqz + sqw
