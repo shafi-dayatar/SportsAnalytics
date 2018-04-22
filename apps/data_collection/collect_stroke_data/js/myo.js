@@ -14,7 +14,6 @@
 		lockingPolicy : 'standard',
 		events : [],
 		myos : [],
-		datetime : new Date()
 
 		onError : function(){
 			throw 'MYO: Error with the socket connection. Myo Connect might not be running. If it is, double check the API version.';
@@ -109,7 +108,7 @@
 		methods : {
 			get_time(){
 
-			}
+			},
 			trigger : function(eventName){
 				var args = Array.prototype.slice.apply(arguments).slice(1);
 				emitter.trigger.call(this, Myo.events, eventName, args);
@@ -202,7 +201,7 @@
 		},
 		'orientation' : function(myo, data){
 			myo.lastQuant = data.orientation;
-			data.timestamp = get_time();
+			//data.timestamp = Math.floor(new Date() / 1000)//get_time();
 			var ori = utils.quatRotate(myo.orientationOffset, data.orientation);
 			var imu_data = {
 				orientation : ori,
@@ -225,7 +224,7 @@
 			myo.lastIMU = imu_data;
 		},
 		'emg' : function(myo, data){
-			data.timestamp = new Date().getTime();
+			//data.timestamp = Math.floor(new Date() / 1000);
 			myo.trigger(data.type, data.emg, data.timestamp);
 		},
 		//Status Events
