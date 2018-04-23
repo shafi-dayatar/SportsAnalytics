@@ -1,0 +1,2 @@
+model_checkpoint_path: "stroke_prediction.chkp"
+all_model_checkpoint_paths: "stroke_prediction.chkp"
