@@ -23,11 +23,12 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-
+import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 public class MainActivity extends AppCompatActivity {
 
     private static final int FEATURES = 500;
     private Classifier mClassifier;
+    private TensorFlowInferenceInterface inferenceInterface;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +47,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         prepArray();
-        System.out.println("calling load model");
-        //loadModel();
-        System.out.println("Something wrong with load Model");
-
+        loadModel();
     }
 
     private List<TennisData> tennisData = new ArrayList<>();
@@ -101,7 +99,8 @@ public class MainActivity extends AppCompatActivity {
         // //which provides the method run.
         // //Threads are implementations and use Runnable to call the method run().
         System.out.println("IN load model");
-        new Thread(new Runnable() {
+        //inferenceInterface = new TensorFlowInferenceInterface(getAssets(), "tensorflow_lite_stroke_prediction.pb");
+         new Thread(new Runnable() {
             @Override
             public void run() {
                 System.out.println("starting load model thread");
@@ -113,8 +112,8 @@ public class MainActivity extends AppCompatActivity {
 //                                    "opt_mnist_convnet.pb", "labels.txt", PIXEL_WIDTH,
 //                                    "input", "output", true));
                     mClassifier = TensorflowClassifier.create(getAssets(), "Keras",
-                            "tensorflow_lite_stroke_prediction.pb", "labels.txt", FEATURES,
-                            "conv2d_11_input", "dense_6/Softmax", false);
+                            "tensorflow_lite_stroke_prediction.pb", "labels.txt", 10*50,
+                            "input", "dense_6/Softmax", false);
                     // conv2d_11_input, dense_6/Softmax"
                 } catch (final Exception e) {
                     //if they aren't found, throw an error!
