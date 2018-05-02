@@ -7,7 +7,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/menu_header"
+        android:src="@drawable/tennis"
         android:scaleType="centerCrop" />
 
     <TextView
@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="@string/header_app_secondname"
-        android:textColor="@color/ColorPrimaryDark"
+        android:textColor="@color/ColorWhite"
         android:textSize="20sp"
         android:layout_gravity="end|bottom"
         android:layout_alignParentBottom="true"
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:text="@string/header_app_firstname"
-        android:textColor="@color/ColorPrimaryDark"
+        android:textColor="@color/ColorWhite"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_gravity="end|bottom"

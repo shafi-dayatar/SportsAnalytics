@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/ColorBackground"
+              android:background="@drawable/t_bg"
               android:orientation="vertical">
 
     <it.ncorti.emgvisualizer.ui.views.SensorGraphView
@@ -45,7 +45,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="@string/stream_not_enabled"
-            android:textColor="@color/ColorSecondaryText"
+            android:textColor="@color/ColorWhite"
             android:textSize="24sp"
             android:textStyle="italic"
             />
@@ -57,7 +57,7 @@
             android:layout_centerHorizontal="true"
             android:gravity="center"
             android:text="@string/nothing_to_show"
-            android:textColor="@color/ColorSecondaryText"
+            android:textColor="@color/ColorWhite"
             android:textSize="24sp"
             android:textStyle="italic"
             />

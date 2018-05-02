@@ -31,9 +31,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.opencsv.CSVReader;
 import com.squareup.otto.Subscribe;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -212,8 +214,7 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
         if (compoundButton.getId() == R.id.control_swc_stream) {
             if (b) {
                 //start Measuring both IMU and EMG Data
-                controlledSensor.startMeasurement("IMU");
-                controlledSensor.startMeasurement("EMG");
+                controlledSensor.startMeasurement("BOTH");
             }
             else {
                 controlledSensor.stopMeasurement();
@@ -283,8 +284,29 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
                 }catch(Exception e ) {
                     e.printStackTrace();
                 }
-
+                try{
+                    readCsvData();
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
+        }
+    }
+    private void readCsvData() throws Exception{
+        String filePathImu = getActivity().getFilesDir().getPath().toString() + "/imu.csv";
+
+        CSVReader reader = new CSVReader(new FileReader(filePathImu));
+        String [] nextLine;
+        while ((nextLine = reader.readNext()) != null) {
+            System.out.println(nextLine[0] +"<-->"+ nextLine[1] +" <-->"+ nextLine[2]+"<--> "+ nextLine[3]+"<--> "+nextLine[4]+"<--> "+ nextLine[5]+" <-->"+ nextLine[6]+"<--> "+ nextLine[7]+"<--> "+ nextLine[8]+"<--> "+ nextLine[9]+"<--> "+ nextLine[10]);
+        }
+        System.out.println("############ IMU FINISHED EMG PRINTINt #################");
+        String filePathEmg = getActivity().getFilesDir().getPath().toString() + "/emg.csv";
+
+        CSVReader readerEmf = new CSVReader(new FileReader(filePathEmg));
+        String [] nextEmg;
+        while ((nextEmg = readerEmf.readNext()) != null) {
+            System.out.println(nextEmg[0] +"<-->"+ nextEmg[1] +" <-->"+ nextEmg[2]+"<--> "+ nextEmg[3]+"<--> "+nextEmg[4]+"<--> "+ nextEmg[5]+" <-->"+ nextEmg[6]+"<--> "+ nextEmg[7]+"<--> "+ nextEmg[8]);
         }
     }
 }

@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        Button btnGithub = (Button) view.findViewById(R.id.btn_github);
+        /*Button btnGithub = (Button) view.findViewById(R.id.btn_github);
         btnGithub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +57,7 @@ public class HomeFragment extends Fragment {
                 i.setData(Uri.parse(url));
                 startActivity(i);
             }
-        });
+        });*/
 
         return view;
     }

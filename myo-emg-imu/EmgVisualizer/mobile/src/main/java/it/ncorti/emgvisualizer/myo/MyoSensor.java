@@ -160,8 +160,6 @@ public class MyoSensor extends Sensor {
                 EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, false));
             } else {
                 measuring = true;
-                imumeasuring = true;
-
                 mMyoCallback.setMyoControlCommand(commandList.sendVibration3());
                 EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, true));
             }
@@ -171,8 +169,17 @@ public class MyoSensor extends Sensor {
                 Log.d(TAG, "Error start IMU measurment");
                 EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, false));
             } else {
+                imumeasuring = true;
+                mMyoCallback.setMyoControlCommand(commandList.sendVibration3());
+                EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, true));
+            }
+        }else if("BOTH".equals(command)) {
+            if (mBluetoothGatt == null ||
+                    !mMyoCallback.setMyoControlCommand(commandList.sendEmgImu())) {
+                Log.d(TAG, "Error start IMU measurment");
+                EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, false));
+            } else {
                 measuring = true;
-
                 imumeasuring = true;
                 mMyoCallback.setMyoControlCommand(commandList.sendVibration3());
                 EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, true));

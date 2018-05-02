@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Myo EMG Visualizer</string>
+    <string name="app_name">Stroke classifier</string>
     <string name="action_pause">Pause</string>
     <string name="action_play">Play</string>
-    <string name="header_app_firstname">Myo EMG</string>
-    <string name="header_app_secondname">Graphic Visualizer</string>
+    <string name="header_app_firstname">Tennis</string>
+    <string name="header_app_secondname">Stroke classifier</string>
     <string name="openDrawer">Open the navigation drawer</string>
     <string name="closeDrawer">Close the navigation drawer</string>
     <string name="connect">Connect</string>

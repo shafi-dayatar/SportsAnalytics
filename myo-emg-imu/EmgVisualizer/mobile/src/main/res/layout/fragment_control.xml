@@ -3,7 +3,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/ColorBackground"
+                android:background="@drawable/t_bg"
                 android:orientation="vertical">
 
     <LinearLayout
@@ -83,21 +83,19 @@
         android:id="@+id/control_txt_separator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/control_line_separator"
-        android:layout_marginLeft="@dimen/margin_med"
-        android:layout_marginRight="@dimen/margin_med"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="@dimen/margin_med"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="262dp"
         android:text="STREAM CONTROL"
         android:textColor="@color/ColorSecondaryText"
-        android:textSize="14sp"/>
+        android:textSize="14sp" />
 
     <Switch
         android:id="@+id/control_swc_stream"
         android:layout_width="369dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
         android:layout_marginBottom="120dp"
         android:text="Start Game"
         android:textSize="14sp" />
