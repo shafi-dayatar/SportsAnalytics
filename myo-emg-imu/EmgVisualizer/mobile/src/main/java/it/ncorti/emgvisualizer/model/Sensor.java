@@ -226,6 +226,9 @@ public abstract class Sensor {
      */
     public abstract boolean isMeasuring();
 
+    public abstract boolean isIMUMeasuring();
+
+
     /**
      * Return concrete subclass instance of a SensorUpdateEvent
      * <p/>

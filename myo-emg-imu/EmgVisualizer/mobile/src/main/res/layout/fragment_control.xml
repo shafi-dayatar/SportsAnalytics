@@ -97,23 +97,9 @@
         android:layout_width="369dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginBottom="189dp"
-        android:text="Stream RAW EMG Data"
-        android:textSize="14sp" />
-
-    <Switch
-        android:id="@+id/control_imu_stream"
-        android:layout_width="365dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentStart="true"
-        android:layout_marginBottom="126dp"
-        android:layout_marginStart="19dp"
-        android:text="Stream RAW IMU Data"
+        android:layout_marginBottom="120dp"
+        android:text="Start Game"
         android:textSize="14sp" />
-
-
-
 
 </RelativeLayout>

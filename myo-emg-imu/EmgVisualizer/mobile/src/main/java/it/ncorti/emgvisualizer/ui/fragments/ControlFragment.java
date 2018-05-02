@@ -72,8 +72,8 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
     /** Reference to Button to trigger connection */
     private Button btnConnection;
     /** Reference to Switch to trigger measuring */
-    private Switch emgStream;
-    private Switch imuStream;
+    private Switch onStream;
+    //private Switch imuStream;
     /** Reference to Seekbar for streaming speed */
     private SeekBar skbRatio;
 
@@ -97,10 +97,10 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
         btnConnection = (Button) view.findViewById(R.id.control_btn_connect);
         txtSensorName = (TextView) view.findViewById(R.id.control_sensor_name);
         txtSensorStatus = (TextView) view.findViewById(R.id.control_sensor_status);
-        emgStream = (Switch) view.findViewById(R.id.control_swc_stream);
-        emgStream.setOnCheckedChangeListener(this);
-        imuStream = (Switch) view.findViewById(R.id.control_imu_stream);
-        imuStream.setOnCheckedChangeListener(this);
+        onStream = (Switch) view.findViewById(R.id.control_swc_stream);
+        onStream.setOnCheckedChangeListener(this);
+//        imuStream = (Switch) view.findViewById(R.id.control_imu_stream);
+//        imuStream.setOnCheckedChangeListener(this);
 
         txtSensorName.setText(controlledSensor.getName());
         updateSensorStatusView();
@@ -149,20 +149,24 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
     private void updateSensorStatusView() {
         txtSensorStatus.setText(Html.fromHtml(controlledSensor.getStatusString()));
         if (controlledSensor.isConnected()) {
-            emgStream.setEnabled(true);
-            imuStream.setEnabled(true);
+            onStream.setEnabled(true);
+            //imuStream.setEnabled(true);
         }
         else {
-            emgStream.setEnabled(false);
-            imuStream.setEnabled(false);
+            onStream.setEnabled(false);
+            //imuStream.setEnabled(false);
         }
-        if (controlledSensor.isMeasuring()) {
-            emgStream.setChecked(true);
-           imuStream.setChecked(true);
+        if (controlledSensor.isMeasuring() && controlledSensor.isIMUMeasuring()) {
+            onStream.setChecked(true);
         } else {
-            emgStream.setChecked(false);
-           imuStream.setChecked(false);
+            onStream.setChecked(false);
         }
+//        if(controlledSensor.isIMUMeasuring()){
+//            imuStream.setChecked(true);
+//        } else {
+//            imuStream.setChecked(false);
+//
+//        }
     }
 
     /**
@@ -205,12 +209,16 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
         System.out.println("inside");
-        if (compoundButton.getId() == R.id.control_imu_stream) {
-            if (b)
+        if (compoundButton.getId() == R.id.control_swc_stream) {
+            if (b) {
+                //start Measuring both IMU and EMG Data
                 controlledSensor.startMeasurement("IMU");
+                controlledSensor.startMeasurement("EMG");
+            }
             else {
                 controlledSensor.stopMeasurement();
-                System.out.println("@@@@@@@@@ Start Printing Data @@@@@@@@");
+
+                System.out.println("@@@@@@@@@ Start collecting IMU Data @@@@@@@@");
                 try{
                     String filePath = getActivity().getFilesDir().getPath().toString() + "/imu.csv";
                     System.out.println(filePath);
@@ -248,41 +256,33 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
                 }catch(Exception e) {
                     e.printStackTrace();
                 }
-            }
-        }
-        else if(compoundButton.getId() == R.id.control_swc_stream) {
-            if (b)
-                controlledSensor.startMeasurement("EMG");
-            else {
-                controlledSensor.stopMeasurement();
-                // add the logic to write csv file
-               try{
-                   String filePath = getActivity().getFilesDir().getPath().toString() + "/emg.csv";
+                try{
+                    String filePath = getActivity().getFilesDir().getPath().toString() + "/emg.csv";
 
-                   File file = new File(filePath);
-                   // if file doesnt exists, then create it
-                   if (!file.exists()) {
-                       file.createNewFile();
-                   }
-                   FileWriter filewriter = new FileWriter(file.getAbsoluteFile());
-                   CSVWriter writer = new CSVWriter(filewriter);
-
-                   writer.writeNext(new String[]{"Timestamp", "emg1", "emg2","emg3","emg4","emg5","emg6","emg7","emg8"});
-
-                LinkedList<RawDataPoint> dataList = controlledSensor.getDataPoints();
-                for(RawDataPoint point : dataList) {
-                    List<String> list  = new ArrayList<>();
-                    list.add(String.valueOf(point.getTimestamp()));
-                    for(float val : point.getValues()) {
-                        list.add(String.valueOf(val));
+                    File file = new File(filePath);
+                    // if file doesnt exists, then create it
+                    if (!file.exists()) {
+                        file.createNewFile();
                     }
-                    String[] arr = new String[list.size()];
-                    writer.writeNext(list.toArray(arr));
-                }
-                   writer.close();
-               }catch(Exception e ) {
+                    FileWriter filewriter = new FileWriter(file.getAbsoluteFile());
+                    CSVWriter writer = new CSVWriter(filewriter);
+
+                    writer.writeNext(new String[]{"Timestamp", "emg1", "emg2","emg3","emg4","emg5","emg6","emg7","emg8"});
+
+                    LinkedList<RawDataPoint> dataList = controlledSensor.getDataPoints();
+                    for(RawDataPoint point : dataList) {
+                        List<String> list  = new ArrayList<>();
+                        list.add(String.valueOf(point.getTimestamp()));
+                        for(float val : point.getValues()) {
+                            list.add(String.valueOf(val));
+                        }
+                        String[] arr = new String[list.size()];
+                        writer.writeNext(list.toArray(arr));
+                    }
+                    writer.close();
+                }catch(Exception e ) {
                     e.printStackTrace();
-               }
+                }
 
             }
         }

@@ -104,6 +104,8 @@ public class MyoSensor extends Sensor {
      */
     private boolean measuring = false;
 
+    private boolean imumeasuring = false;
+
     /**
      * Public constructor that requires
      * @param name      Myo Device name
@@ -158,6 +160,8 @@ public class MyoSensor extends Sensor {
                 EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, false));
             } else {
                 measuring = true;
+                imumeasuring = true;
+
                 mMyoCallback.setMyoControlCommand(commandList.sendVibration3());
                 EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, true));
             }
@@ -168,6 +172,8 @@ public class MyoSensor extends Sensor {
                 EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, false));
             } else {
                 measuring = true;
+
+                imumeasuring = true;
                 mMyoCallback.setMyoControlCommand(commandList.sendVibration3());
                 EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, true));
             }
@@ -182,6 +188,7 @@ public class MyoSensor extends Sensor {
             EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, true));
         } else {
             measuring = false;
+            imumeasuring = false;
             EventBusProvider.postOnMainThread(new SensorMeasuringEvent(this, false));
         }
     }
@@ -189,6 +196,11 @@ public class MyoSensor extends Sensor {
     @Override
     public boolean isMeasuring() {
         return measuring;
+    }
+
+    @Override
+    public boolean isIMUMeasuring() {
+        return imumeasuring;
     }
 
     @Override
