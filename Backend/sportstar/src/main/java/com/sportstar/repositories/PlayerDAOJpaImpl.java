@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import com.sportstar.exceptions.PlayerDoesNotExistsException;
 import com.sportstar.model.entities.Player;
 
-@Transactional
 @Repository
 public class PlayerDAOJpaImpl implements PlayerDAO {
 
@@ -33,6 +32,16 @@ public class PlayerDAOJpaImpl implements PlayerDAO {
 	@Transactional
 	public void createPlayer(Player player) {
 		entityManager.persist(player);
+	}
+
+	@Override
+	public boolean checkCredentials(String userName, String password)  {
+		Query query = entityManager.createNamedQuery("Player.checkPlayer");
+		query.setParameter("emailid", userName);
+		query.setParameter("password", password);
+		List list =  query.getResultList();
+		return !list.isEmpty();
+		
 	}
 
 }
