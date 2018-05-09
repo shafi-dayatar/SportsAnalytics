@@ -24,46 +24,32 @@ import com.sportstar.service.PlayerService;
 public class PlayerController {
 public static final Logger LOGGER = LoggerFactory.getLogger(GameController.class);
 
+	
 	@Autowired
 	private PlayerService playerService;
 	
-	@RequestMapping(value = "/player", method = RequestMethod.POST)
-	public ResponseEntity<?> createPlayer(@RequestBody Player playerDto){
+	@Autowired
+	private AuthenticateService authenticateService;
 	
-		try{playerService.createPlayer(playerDto);		
+	@RequestMapping(value = "/player", method = RequestMethod.POST)
+	public ResponseEntity<?> createPlayer(@RequestBody PlayerDto playerDto){
+	
+		playerService.createPlayer(playerDto);		
 		
 		return new ResponseEntity<ApiResponse>(new ApiResponse(playerDto), HttpStatus.OK);
-		}catch(Exception e) {
-			return new ResponseEntity<ApiResponse>(new ApiResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
-
-		}
 	}
 	
 	@RequestMapping(value = "/player", method = RequestMethod.GET)
 	public ResponseEntity<?> getPlayer(@RequestParam String emailId){
 		
-		Player player = playerService.getPlayer(emailId);
-		if(player == null) {
+		if(!authenticateService.authenticate(emailId)) {
 			ApiResponse response = new ApiResponse();
-			response.setMessage("Player Does Not Exists");
 			return new ResponseEntity<ApiResponse>(response, HttpStatus.BAD_REQUEST);
 		}		
 		ApiResponse apiResponse = null;
-		Player playerDto = playerService.getPlayer(emailId);
+		PlayerDto playerDto = playerService.getPlayer(emailId);
 		apiResponse = new ApiResponse(playerDto);
 		return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.OK);
-	}
-	
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public ResponseEntity<?> authenticate(@RequestBody Player player){
-		
-		if(playerService.authenticate(player.getEmailid(), player.getPassword())) {
-			ApiResponse response = new ApiResponse("Login Failed");
-			return new ResponseEntity<ApiResponse>(response, HttpStatus.BAD_REQUEST);
-		} else {		
-			ApiResponse apiResponse = new ApiResponse(player,"Success");
-			return new ResponseEntity<ApiResponse>(apiResponse, HttpStatus.OK);
-		}
 	}
 	
 }

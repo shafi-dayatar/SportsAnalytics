@@ -3,17 +3,17 @@ package com.sportstar.service;
 import java.util.List;
 
 import com.sportstar.exceptions.GameIDException;
-import com.sportstar.model.entities.Game;
+import com.sportstar.model.dto.GameDto;
 
 public interface GameService {
 
-	Game startGame(String emailId);
+	void startGame(String emailId);
 
-	Game getGameById(String gameId) throws GameIDException;
+	GameDto getGameById(String gameId) throws GameIDException;
 
-	Game updateEndTime(String gameId) throws GameIDException;
+	GameDto updateEndTime(String gameId) throws GameIDException;
 
-	Game analyseGame(String gameId) throws GameIDException;
+	GameDto analyseGame(String gameId) throws GameIDException;
 	
-	List<Game> getAllGames(String emailId);
+	List<GameDto> getAllGames(String emailId);
 }
