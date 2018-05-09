@@ -9,6 +9,4 @@ public interface PlayerDAO {
 
 	void createPlayer(Player player);
 
-	boolean checkCredentials(String userName, String password);
-
 }

@@ -14,6 +14,7 @@ import com.sportstar.exceptions.GameIDException;
 import com.sportstar.model.entities.Game;
 import com.sportstar.model.entities.Player;
 
+@Transactional
 @Repository
 public class GameDAOJpaImpl implements GameDAO {
 	

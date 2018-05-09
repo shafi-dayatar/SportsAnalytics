@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.rsk54.strokeanalysis.models.Classification;
 import com.example.rsk54.strokeanalysis.models.Classifier;
 import com.example.rsk54.strokeanalysis.models.TensorflowClassifier;
 
@@ -20,16 +21,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
+
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 public class MainActivity extends AppCompatActivity {
 
     private static final int FEATURES = 500;
     private Classifier mClassifier;
     private TensorFlowInferenceInterface inferenceInterface;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +50,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        prepArray();
+        //prepArray();
         loadModel();
+       // predict();
     }
 
-    private List<TennisData> tennisData = new ArrayList<>();
-    private void prepArray() {
+    private ArrayList<TennisData> tennisData = new ArrayList<>();
+    private ArrayList prepArray() {
 
 
 
@@ -89,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
             Log.wtf("MyActivity", "Error reading data file on line " + line, e);
             e.printStackTrace();
         }
+        return tennisData;
     }
 
 
@@ -111,9 +117,15 @@ public class MainActivity extends AppCompatActivity {
 //                            TensorflowClassifier.create(getAssets(), "TensorFlow",
 //                                    "opt_mnist_convnet.pb", "labels.txt", PIXEL_WIDTH,
 //                                    "input", "output", true));
+
                     mClassifier = TensorflowClassifier.create(getAssets(), "Keras",
-                            "tensorflow_lite_stroke_prediction.pb", "labels.txt", 10*50,
-                            "input", "dense_6/Softmax", false);
+                            "tensorflow_lite_stroke_prediction.pb", "labels.txt", 50,
+                            "input_input", "output/Softmax", false);
+                predict();
+
+                    //Log.d("classifier", mClassifier.name());
+
+
                     // conv2d_11_input, dense_6/Softmax"
                 } catch (final Exception e) {
                     //if they aren't found, throw an error!
@@ -124,6 +136,35 @@ public class MainActivity extends AppCompatActivity {
             }
         }).start();
     }
+
+    private float[] createDummy(){
+        Random r = new Random();
+        float [] output = new float[500];
+
+        for(int i=0; i<500;i++){
+            output[i] = r.nextFloat();
+        }
+        return output;
+    }
+    public void predict() {
+        String text = "";
+        //float[] input = new float[]{1.70026f,-0.0220337f,-0.196838f,-0.471069f,0.859558f,0.412598f,0.206055f,-2.75f,0.158787f,-0.367354f};
+
+        //Log.d( "Stack message", Arrays.toString(input));
+        //Log.d("classifier", mClassifier.name());
+
+        final Classification res = mClassifier.recognize(createDummy());
+        if (res.getLabel() == null) {
+            text += mClassifier.name() + ": ?\n";
+        } else {
+            //else output its name
+            text += String.format("%s: %s, %f\n", mClassifier.name(), res.getLabel(),
+                    res.getConf());
+        }
+//            }
+        System.out.println(text);
+    }
+
 
 
     @Override

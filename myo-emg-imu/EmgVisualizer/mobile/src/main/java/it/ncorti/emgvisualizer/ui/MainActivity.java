@@ -34,6 +34,11 @@ import android.view.View;
 
 import com.squareup.otto.Subscribe;
 
+import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
+
+import it.ncorti.emgvisualizer.DataAnalysis.AnalyseData;
+import it.ncorti.emgvisualizer.DataAnalysis.models.Classifier;
+import it.ncorti.emgvisualizer.DataAnalysis.models.TensorflowClassifier;
 import it.ncorti.emgvisualizer.R;
 import it.ncorti.emgvisualizer.model.EventBusProvider;
 import it.ncorti.emgvisualizer.ui.fragments.ControlFragment;
@@ -49,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     /** TAG for debugging purpose */
     private static final String TAG = "MainActivity";
+
 
     /** Arrays of menu title strings */
     private String TITLES[] = {
@@ -94,6 +100,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        AnalyseData analyse = AnalyseData.getInstance(getAssets());
+
         toolbar = (Toolbar) findViewById(R.id.main_tool_bar);
         setSupportActionBar(toolbar);
 
@@ -125,7 +133,12 @@ public class MainActivity extends AppCompatActivity {
 
         changeFragment(new HomeFragment(), POSIT_HOME);
         EventBusProvider.register(this);
+
+
     }
+
+
+
 
     /**
      * Private method for triggering a fragment switch at runtime
