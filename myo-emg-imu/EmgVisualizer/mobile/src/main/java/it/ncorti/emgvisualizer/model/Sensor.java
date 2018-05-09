@@ -17,7 +17,11 @@ package it.ncorti.emgvisualizer.model;
 
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Queue;
+
+import it.ncorti.emgvisualizer.DataAnalysis.AnalyseData;
 
 /**
  * Model class for handling an hardware concrete sensor
@@ -40,6 +44,19 @@ public abstract class Sensor {
     private LinkedList<RawDataPoint> dataPoints = new LinkedList<>();
 
     private LinkedList<ImuDataPoint> imuDataPoints = new LinkedList<>();
+
+    public LinkedList<ImuDataPoint> getQueueData() {
+        return queueData;
+    }
+
+    public void setQueueData(LinkedList<ImuDataPoint> queueData) {
+        this.queueData = queueData;
+    }
+
+    private LinkedList<ImuDataPoint> queueData = new LinkedList<>();
+
+    private boolean crossedOnce =  false;
+    private boolean crossedTwo = false;
 
     /**
      * Max sensor value
@@ -177,7 +194,48 @@ public abstract class Sensor {
     }
 
     public synchronized void addIMUDataPoint(ImuDataPoint dataPoint) {
+        System.out.println(Arrays.toString(dataPoint.getAccelerometerData()));
+
         imuDataPoints.addLast(dataPoint);
+         int len = imuDataPoints.size();
+         if(len % 50 ==0 ) {
+                                 AnalyseData ad = AnalyseData.getInstance(null);
+
+                    ad.predictData(imuDataPoints.subList(len-50,len));
+
+
+         }
+
+        double[] acc = dataPoint.getAccelerometerData();
+//        double val = Math.pow(acc[0],2)+Math.pow(acc[1],2)+Math.pow(acc[0],3);
+//        val = Math.sqrt(val);
+//        if(val > 1){
+//            if(crossedOnce && crossedTwo){
+//                int endIndex = imuDataPoints.size();
+//                if(imuDataPoints.size() > 50 ) {
+//                    queueData.clear();
+//                    queueData.addAll(imuDataPoints.subList(endIndex - 49, endIndex));
+//                    queueData.addLast(dataPoint);
+//                    AnalyseData ad = AnalyseData.getInstance(null);
+//                    System.out.println("TAG LEN Sensor"+ queueData.size());
+//
+//                    ad.predictData(queueData);
+//                    crossedTwo = false;
+//                    crossedOnce = false;
+//
+//                } else {
+//                    crossedTwo = false;
+//                }
+//
+//            } else {
+//                if(crossedOnce){
+//                    crossedTwo = true;
+//                } else {
+//                    crossedOnce = true;
+//                }
+//            }
+
+        //}
 
         if (imuDataPoints.size() > MAX_DATA_POINTS) {
             imuDataPoints.removeFirst();
