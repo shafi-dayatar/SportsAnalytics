@@ -12,9 +12,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.sportstar.model.Gender;
 import com.sportstar.model.Handedness;
 
@@ -22,9 +19,6 @@ import com.sportstar.model.Handedness;
 @Table(name = "player")
 @NamedQueries({
     @NamedQuery(name="Player.getPlayerDetails",query="SELECT p FROM Player p WHERE p.emailid= :emailid"),
-    
-    @NamedQuery(name="Player.checkPlayer",query="SELECT p FROM Player p WHERE p.emailid= :emailid AND p.password = :password")
-
 })
 public class Player implements Serializable{
 	
@@ -37,18 +31,20 @@ public class Player implements Serializable{
 	@Column(name = "EMAILID")
 	private String emailid;
 
-    @JsonProperty(access = Access.WRITE_ONLY)
-    @NotNull(message = "password must not be null")
+	@NotNull(message = "password must not be null")
 	@Column(name = "PASSWORD")
 	private String password;
 	
+	@NotNull(message = "age must not be null")
 	@Column(name = "AGE")
 	private int age;
 	
+	@NotNull(message = "Gender must not be null")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "GENDER")
 	private Gender gender;
 	
+	@NotNull(message = " must not be null")
 	@Enumerated(EnumType.STRING)
 	@Column(name = "HANDEDNESS")
 	private Handedness handedness;

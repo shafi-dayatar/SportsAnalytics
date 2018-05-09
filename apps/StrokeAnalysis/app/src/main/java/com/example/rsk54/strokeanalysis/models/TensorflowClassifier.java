@@ -1,6 +1,7 @@
 package com.example.rsk54.strokeanalysis.models;
 
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import org.tensorflow.contrib.android.TensorFlowInferenceInterface;
 
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 //Reads text from a character-input stream, buffering characters so as to provide for the efficient reading of characters, arrays, and lines.
@@ -102,7 +104,8 @@ public class TensorflowClassifier implements Classifier {
         //using the interface
         //give it the input name, raw pixels from the drawing,
         //input size
-        tfHelper.feed(inputName, pixels, 1, inputSize, inputSize, 1);
+        Log.d("Pixels", Arrays.toString(pixels));
+        tfHelper.feed(inputName, pixels, 1 ,10, 50, 1);
 
         //probabilities
         if (feedKeepProb) {

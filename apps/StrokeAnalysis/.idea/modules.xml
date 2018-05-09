@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/StrokeAnalysis.iml" filepath="$PROJECT_DIR$/StrokeAnalysis.iml" />
+      <module fileurl="file://D:\Downloads\SportsAnalytics-master (2)\SportsAnalytics-master\apps\StrokeAnalysis\tensorflow\StrokeAnalysis-tensorflow.iml" filepath="D:\Downloads\SportsAnalytics-master (2)\SportsAnalytics-master\apps\StrokeAnalysis\tensorflow\StrokeAnalysis-tensorflow.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/lib/lib.iml" filepath="$PROJECT_DIR$/lib/lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/tensorflow/tensorflow.iml" filepath="$PROJECT_DIR$/tensorflow/tensorflow.iml" />
