@@ -359,7 +359,6 @@ public class MyoGattCallback extends BluetoothGattCallback {
             ImuDataPoint point = new ImuDataPoint(imu_data,systemTime_ms);
             point.TAG = "IMU RAW DATA";
             concreteSensor.addIMUDataPoint(point);
-
             if (systemTime_ms > lastNeverSleepTime + NEVER_SLEEP_SEND_TIME) {
                 // set Myo [Never Sleep Mode]
                 setMyoControlCommand(commandList.sendUnSleep());
