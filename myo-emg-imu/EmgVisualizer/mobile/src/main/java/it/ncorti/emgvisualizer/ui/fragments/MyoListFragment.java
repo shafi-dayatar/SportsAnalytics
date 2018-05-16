@@ -24,6 +24,7 @@ import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
+import android.graphics.Color;
 import android.graphics.Outline;
 import android.os.Build;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -49,7 +51,6 @@ import it.ncorti.emgvisualizer.ui.MySensorManager;
 
 /**
  * Fragment for displaying scanned myos
- * @author Nicola
  */
 public class MyoListFragment extends Fragment {
 
@@ -124,7 +125,17 @@ public class MyoListFragment extends Fragment {
             }
         });
 
-        adapter = new MyoArrayAdapter(getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, deviceList);
+
+        adapter = new MyoArrayAdapter(getActivity(), android.R.layout.simple_list_item_2, android.R.id.text1, deviceList){
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                text1.setTextColor(Color.WHITE);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+                text2.setTextColor(Color.WHITE);
+                return view;
+            };
+        };
         lstMyo.setAdapter(adapter);
         lstMyo.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 

@@ -31,6 +31,12 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import it.ncorti.emgvisualizer.model.EventBusProvider;
+import it.ncorti.emgvisualizer.model.ImuDataPoint;
+import it.ncorti.emgvisualizer.model.RawDataPoint;
+import it.ncorti.emgvisualizer.model.Sensor;
+import it.ncorti.emgvisualizer.model.SensorConnectEvent;
+import it.ncorti.emgvisualizer.model.SensorMeasuringEvent;
 import com.opencsv.CSVReader;
 import com.squareup.otto.Subscribe;
 
@@ -38,18 +44,10 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
 import it.ncorti.emgvisualizer.R;
-import it.ncorti.emgvisualizer.model.EventBusProvider;
-import it.ncorti.emgvisualizer.model.ImuDataPoint;
-import it.ncorti.emgvisualizer.model.RawDataPoint;
-import it.ncorti.emgvisualizer.model.Sensor;
-import it.ncorti.emgvisualizer.model.SensorConnectEvent;
-import it.ncorti.emgvisualizer.model.SensorMeasuringEvent;
-import it.ncorti.emgvisualizer.myo.CSVUtil;
 import it.ncorti.emgvisualizer.ui.MySensorManager;
 
 import com.opencsv.CSVWriter;
@@ -57,7 +55,6 @@ import com.opencsv.CSVWriter;
 
 /**
  * Fragment for controlling sensors, allowing to connect and start raw data receiving
- * @author Nicola
  */
 public class ControlFragment extends Fragment implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
 
@@ -100,6 +97,7 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
         txtSensorName = (TextView) view.findViewById(R.id.control_sensor_name);
         txtSensorStatus = (TextView) view.findViewById(R.id.control_sensor_status);
         onStream = (Switch) view.findViewById(R.id.control_swc_stream);
+        onStream.setTextOn("Start Game");
         onStream.setOnCheckedChangeListener(this);
 //        imuStream = (Switch) view.findViewById(R.id.control_imu_stream);
 //        imuStream.setOnCheckedChangeListener(this);
@@ -152,6 +150,7 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
         txtSensorStatus.setText(Html.fromHtml(controlledSensor.getStatusString()));
         if (controlledSensor.isConnected()) {
             onStream.setEnabled(true);
+            onStream.setTextOff("End game");
             //imuStream.setEnabled(true);
         }
         else {
@@ -238,22 +237,22 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
                             "AccY", "AccZ", "GyroX", "GyroY", "GyroZ"});
 
                     LinkedList<ImuDataPoint> dataList = controlledSensor.getIMUDataPoints();
-                for(ImuDataPoint point : dataList) {
-                    List<String> list  = new ArrayList<>();
-                    list.add(String.valueOf(point.getTimestamp()));
-                    for(double val : point.getOrientationData()) {
-                        list.add(String.valueOf(val));
+                    for(ImuDataPoint point : dataList) {
+                        List<String> list  = new ArrayList<>();
+                        list.add(String.valueOf(point.getTimestamp()));
+                        for(double val : point.getOrientationData()) {
+                            list.add(String.valueOf(val));
+                        }
+                        for(double val : point.getOrientationData()) {
+                            list.add(String.valueOf(val));
+                        }
+                        for(double val : point.getAccelerometerData()) {
+                            list.add(String.valueOf(val));
+                        }
+                        String[] arr = new String[list.size()];
+                        csvWriter.writeNext(list.toArray(arr));
                     }
-                    for(double val : point.getOrientationData()) {
-                        list.add(String.valueOf(val));
-                    }
-                    for(double val : point.getAccelerometerData()) {
-                        list.add(String.valueOf(val));
-                    }
-                    String[] arr = new String[list.size()];
-                    csvWriter.writeNext(list.toArray(arr));
-                }
-                csvWriter.close();
+                    csvWriter.close();
                 }catch(Exception e) {
                     e.printStackTrace();
                 }

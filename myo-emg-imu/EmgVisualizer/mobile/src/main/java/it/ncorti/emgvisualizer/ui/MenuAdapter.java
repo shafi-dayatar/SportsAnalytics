@@ -30,7 +30,6 @@ import it.ncorti.emgvisualizer.model.EventBusProvider;
 /**
  * Adapter for handling menu visualization using a Recyclerview
  *
- * @author Nicola
  */
 public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.ViewHolder> {
 

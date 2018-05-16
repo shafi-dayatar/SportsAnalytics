@@ -21,7 +21,6 @@ import android.util.Log;
 /**
  * Abstract class representing sensor connection/disconnection
  *
- * @author Nicola
  */
 public class SensorConnectEvent extends SensorEvent {
 

@@ -25,7 +25,6 @@ import com.squareup.otto.Bus;
  * <p>
  * The only public method that must be invoked is postOnMainThread to asyncronously dispatch an event
  *
- * @author Nicola
  */
 public final class EventBusProvider {
     /**

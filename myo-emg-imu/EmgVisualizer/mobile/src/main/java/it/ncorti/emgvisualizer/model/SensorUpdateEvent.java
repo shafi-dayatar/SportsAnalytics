@@ -18,8 +18,6 @@ package it.ncorti.emgvisualizer.model;
 
 /**
  * Abstract class representing receiving of new RAW data
- *
- * @author Nicola
  */
 public abstract class SensorUpdateEvent extends SensorEvent {
 

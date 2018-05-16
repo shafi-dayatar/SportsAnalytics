@@ -18,7 +18,6 @@ package it.ncorti.emgvisualizer.model;
 /**
  * Abstract class representing sensor measuring start/stop event
  *
- * @author Nicola
  */
 public class SensorMeasuringEvent extends SensorConnectEvent {
 

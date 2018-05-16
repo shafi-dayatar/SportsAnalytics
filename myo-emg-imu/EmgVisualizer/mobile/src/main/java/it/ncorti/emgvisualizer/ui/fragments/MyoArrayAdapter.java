@@ -27,8 +27,6 @@ import java.util.List;
 
 /**
  * Adapter for displaying a list of found Myos
- *
- * @author Nicola
  */
 public class MyoArrayAdapter extends ArrayAdapter<Pair<String, String>> {
 

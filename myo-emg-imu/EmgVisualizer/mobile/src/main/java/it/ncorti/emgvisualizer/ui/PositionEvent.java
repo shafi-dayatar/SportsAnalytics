@@ -7,7 +7,6 @@ import it.ncorti.emgvisualizer.model.AbstractEvent;
 /**
  * Class for representing a fragment changing event
  *
- * Created by nicola on 30/07/15.
  */
 public class PositionEvent extends AbstractEvent {
 

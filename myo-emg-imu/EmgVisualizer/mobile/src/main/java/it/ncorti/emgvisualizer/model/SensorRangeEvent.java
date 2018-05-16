@@ -20,7 +20,6 @@ package it.ncorti.emgvisualizer.model;
  * Abstract class representing a generic event related to a sensor range change.
  * This event can be used to trigger visual redrawing of graph or similar.
  *
- * @author Nicola
  */
 public abstract class SensorRangeEvent extends SensorEvent {
 

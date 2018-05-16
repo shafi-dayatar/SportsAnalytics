@@ -3,7 +3,7 @@
 
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/t_bg"
+                android:background="@drawable/t_r"
                 android:orientation="vertical">
 
     <LinearLayout
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/margin_med"
-        android:background="@android:color/white"
+        android:background="@android:color/background_dark"
         android:elevation="15dp"
         android:orientation="vertical">
 
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_low"
             android:text="Sensor Name"
-            android:textColor="@color/ColorSecondaryText"
+            android:textColor="@color/ColorWhite"
             android:textSize="18sp"
             android:textStyle="bold"
             />
@@ -32,6 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_low"
             android:layout_marginEnd="@dimen/margin_low"
+            android:textColor="@color/ColorWhite"
             android:textSize="14sp"
             android:singleLine="false"/>
 
@@ -40,7 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_low"
             android:text="Sensor Status"
-            android:textColor="@color/ColorSecondaryText"
+            android:textColor="@color/ColorWhite"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
@@ -50,6 +51,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_low"
             android:layout_marginEnd="@dimen/margin_low"
+            android:textColor="@color/ColorWhite"
             android:textSize="14sp"
             android:singleLine="false"/>
     </LinearLayout>
@@ -85,9 +87,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="262dp"
+        android:layout_marginBottom="172dp"
         android:text="STREAM CONTROL"
-        android:textColor="@color/ColorSecondaryText"
+        android:textColor="@color/ColorWhite"
         android:textSize="14sp" />
 
     <Switch
@@ -97,6 +99,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="120dp"
+        android:textColor="@color/ColorWhite"
         android:text="Start Game"
         android:textSize="14sp" />
 

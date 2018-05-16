@@ -10,6 +10,8 @@
     <dimen name="padding_med">20dp</dimen>
 
     <dimen name="padding_low">10dp</dimen>
+    <dimen name="corner_radius">0dp</dimen>
+    <dimen name="layer_padding">3dp</dimen>
     <dimen name="margin_low">10dp</dimen>
 
     <dimen name="left_margin_med">20dp</dimen>

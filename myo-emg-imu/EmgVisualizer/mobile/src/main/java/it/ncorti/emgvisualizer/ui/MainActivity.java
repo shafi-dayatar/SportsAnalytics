@@ -15,11 +15,18 @@
 */
 package it.ncorti.emgvisualizer.ui;
 
+import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -46,9 +53,10 @@ import it.ncorti.emgvisualizer.ui.fragments.GraphFragment;
 import it.ncorti.emgvisualizer.ui.fragments.HomeFragment;
 import it.ncorti.emgvisualizer.ui.fragments.MyoListFragment;
 
+import static java.security.AccessController.getContext;
+
 /**
  * Main activity for handling main drawer menu with fragment changes
- * @author Nicola
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -115,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         mLayoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.main_drawer);
-        
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, toolbar, R.string.openDrawer, R.string.closeDrawer) {
 
             @Override
@@ -192,6 +200,11 @@ public class MainActivity extends AppCompatActivity {
                 fragment = new HomeFragment();
                 break;
             case POSIT_SEARCH:
+                BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+                if (!mBluetoothAdapter.isEnabled()) {
+                    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+                    startActivityForResult(enableBtIntent, 1);
+                }
                 fragment = new MyoListFragment();
                 break;
             case POSIT_CONTROL:

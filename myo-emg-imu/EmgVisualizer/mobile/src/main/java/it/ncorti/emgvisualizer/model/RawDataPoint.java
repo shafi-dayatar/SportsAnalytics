@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * Class representing a single Raw data point, providing timestamp, accuracy and an array of float values.
  *
- * @author Nicola
  */
 public class RawDataPoint implements Cloneable {
 

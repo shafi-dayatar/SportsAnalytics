@@ -45,9 +45,9 @@ import it.ncorti.emgvisualizer.model.SensorUpdateEvent;
 import it.ncorti.emgvisualizer.ui.MySensorManager;
 import it.ncorti.emgvisualizer.ui.views.SensorGraphView;
 
+
 /**
  * Fragment for displaying sensors raw data
- * @author Nicola
  */
 public class GraphFragment extends Fragment {
 

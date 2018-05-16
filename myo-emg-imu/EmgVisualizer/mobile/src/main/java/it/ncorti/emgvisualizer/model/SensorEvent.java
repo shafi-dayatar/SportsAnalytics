@@ -18,7 +18,6 @@ package it.ncorti.emgvisualizer.model;
 /**
  * Abstract class representing a generic event related to a specific sensor.
  *
- * @author Nicola
  */
 public abstract class SensorEvent extends AbstractEvent {
 

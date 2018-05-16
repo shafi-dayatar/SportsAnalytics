@@ -18,7 +18,6 @@ package it.ncorti.emgvisualizer.model;
 /**
  * Abstract class representing a generic event
  *
- * @author Nicola
  */
 public abstract class AbstractEvent {
 

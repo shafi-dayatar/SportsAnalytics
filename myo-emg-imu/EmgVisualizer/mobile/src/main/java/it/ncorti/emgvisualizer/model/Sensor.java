@@ -25,7 +25,6 @@ import it.ncorti.emgvisualizer.DataAnalysis.AnalyseData;
 
 /**
  * Model class for handling an hardware concrete sensor
- * @author Nicola Corti
  */
 public abstract class Sensor {
 

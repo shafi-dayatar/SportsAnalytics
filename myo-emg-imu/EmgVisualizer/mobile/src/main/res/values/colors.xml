@@ -9,11 +9,16 @@
     <color name="graph_line7">#FFe51c23</color>
     <color name="graph_line8">#FFcddc39</color>
     <color name="graph_info">#1976D2</color>
+    <color name="red_pressed">#DD4B39</color>
+    <color name="red_normal">#B64032</color>
+
+    <color name="blue_pressed">#5A76B1</color>
+    <color name="blue_normal">#516590</color>
 
     <color name="ColorWhite">#FFFFFF</color>
     <color name="ColorBackground">#22B6B6B6</color>
-    <color name="ColorPrimary">#2196F3</color>
-    <color name="ColorPrimaryDark">#1976D2</color>
+    <color name="ColorPrimary">#001111</color>
+    <color name="ColorPrimaryDark">#000000</color>
     <color name="ColorAccent">#FF5722</color>
     <color name="ColorAccentHighlight">#ffff0000</color>
     <color name="ColorPrimaryLight">#BBDEFB</color>

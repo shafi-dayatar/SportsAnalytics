@@ -14,7 +14,6 @@ import it.ncorti.emgvisualizer.model.Sensor;
 
 /**
  * Custom view for viewing graph of raw datas
- * @author Nicola
  */
 public class SensorGraphView extends View {
 

@@ -25,7 +25,6 @@ import it.ncorti.emgvisualizer.myo.MyoSensor;
 
 /**
  * Global class for handling different kind of sensors
- * @author Nicola
  */
 public class MySensorManager {
 
