@@ -36,7 +36,7 @@ public abstract class Sensor {
     /**
      * Data point list size
      */
-    private static final int MAX_DATA_POINTS = 5000;
+    private static final int MAX_DATA_POINTS = 100000;
     /**
      * Data point list
      */
@@ -193,16 +193,13 @@ public abstract class Sensor {
     }
 
     public synchronized void addIMUDataPoint(ImuDataPoint dataPoint) {
-        System.out.println(Arrays.toString(dataPoint.getAccelerometerData()));
+        //System.out.println(Arrays.toString(dataPoint.getAccelerometerData()));
 
         imuDataPoints.addLast(dataPoint);
          int len = imuDataPoints.size();
          if(len % 50 ==0 ) {
-                                 AnalyseData ad = AnalyseData.getInstance(null);
-
-                    ad.predictData(imuDataPoints.subList(len-50,len));
-
-
+             AnalyseData ad = AnalyseData.getInstance(null);
+             ad.predictData(imuDataPoints.subList(len-50,len));
          }
 
         double[] acc = dataPoint.getAccelerometerData();

@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,31 +18,19 @@ import com.sportstar.repositories.GameDAO;
 import com.sportstar.repositories.PlayerDAO;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 public class GameServiceImpl implements GameService {
 	
-		
-	@Autowired
-	private ModelMapper modelMapper;
-
 	@Autowired
 	private GameDAO gameDao;
 	
 	@Autowired
 	private PlayerDAO playerDao;
 
-	public void startGame(String emailId) {
-		Player player = null;
-		try {
-			player = playerDao.getPlayer(emailId);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Game game = new Game();
-		game.setPlayedOn(getCurrentDateinSQL());
-		game.setStartTime(java.sql.Time.valueOf(LocalTime.now()));
-		game.setPlayer(player);
-		gameDao.createGame(game);
+	public Game startGame(Game gameData) {
+		
+		gameDao.createGame(gameData);
+		return gameData;
 		
 	}	
 	private Date getCurrentDateinSQL() {
@@ -53,31 +40,28 @@ public class GameServiceImpl implements GameService {
 		return date;
 	}
 
-	public GameDto getGameById(String gameId) throws GameIDException {
+	public Game getGameById(String gameId) throws GameIDException {
 		int gameIdInt = Integer.parseInt(gameId);
 		Game game = gameDao.getGameDetails(gameIdInt);
-		GameDto gameDto = modelMapper.map(game,GameDto.class);
-		return gameDto;		
+		return game;		
 	}
 
-	public GameDto updateEndTime(String gameId) throws GameIDException {
+	public Game updateEndTime(String gameId) throws GameIDException {
 		int gameIdInt = Integer.parseInt(gameId);
 		gameDao.updateEndTime(gameIdInt);
 		Game game = gameDao.getGameDetails(gameIdInt);
-		GameDto gameDto = modelMapper.map(game,GameDto.class);
-		return gameDto;		
+		return game;		
 
 	}
 
-	public GameDto analyseGame(String gameId) throws GameIDException {
+	public Game analyseGame(String gameId) throws GameIDException {
 		int gameIdInt = Integer.parseInt(gameId);
 		gameDao.analyseGame(gameIdInt);
 		Game game = gameDao.getGameDetails(gameIdInt);
-		GameDto gameDto = modelMapper.map(game,GameDto.class);
-		return gameDto;		
+		return game;		
 	}
 
-	public List<GameDto> getAllGames(String emailId) {
+	public List<Game> getAllGames(String emailId) {
 		Player player = null ;
 		try {
 			player = playerDao.getPlayer(emailId);
@@ -85,13 +69,7 @@ public class GameServiceImpl implements GameService {
 			e.printStackTrace();
 		}
 		List<Game> gameList = gameDao.getAllGames(player);
-		return gameList.stream().map(game -> convertToDto(game))
-		          .collect(Collectors.toList());
+		return gameList;
 	}
-	
-	private GameDto convertToDto(Game game) {
-	    GameDto gameDto = modelMapper.map(game, GameDto.class);
-	    return gameDto;
-	}
-		
+			
 }

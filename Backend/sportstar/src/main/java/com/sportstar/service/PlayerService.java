@@ -1,11 +1,13 @@
 package com.sportstar.service;
 
-import com.sportstar.model.dto.PlayerDto;
+import com.sportstar.model.entities.Player;
 
 public interface PlayerService {
 
-	PlayerDto getPlayer(String emailId);
+	Player getPlayer(String emailId);
 
-	void createPlayer(PlayerDto playerDto);
+	void createPlayer(Player playerDto);
+	
+	boolean authenticate(String userName, String password);
 
 }

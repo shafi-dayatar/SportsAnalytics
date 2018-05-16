@@ -65,4 +65,19 @@ public class ImuDataPoint extends RawDataPoint{
         return builder.toString();
     }
 
+    public String getIMUData(){
+        StringBuilder data = new StringBuilder();
+        for(double val : mOrientationData) {
+            data.append(String.valueOf(val) + ",");
+        }
+        for(double val : mAccelerometerData) {
+            data.append(String.valueOf(val) + ",");
+        }
+        for(double val : mGyroData) {
+            data.append(String.valueOf(val) + ",");
+        }
+        data.deleteCharAt(data.length()-1);
+        return data.toString();
+    }
+
 }

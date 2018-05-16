@@ -1,43 +1,43 @@
 package com.sportstar.service;
 
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.sportstar.model.dto.PlayerDto;
+import com.sportstar.exceptions.PlayerDoesNotExistsException;
 import com.sportstar.model.entities.Player;
 import com.sportstar.repositories.PlayerDAO;
 
+
+@Service
+@Transactional
 public class PlayerServiceImpl implements PlayerService {
-	@Autowired
-	private ModelMapper modelMapper;
-	
+		
 	@Autowired
 	private PlayerDAO playerDao;
 	
 	@Override
-	public PlayerDto getPlayer(String emailId) {
+	public Player getPlayer(String emailId) {
 		Player player = null;
 		try {
 			player = playerDao.getPlayer(emailId);
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (PlayerDoesNotExistsException e) {
+			//e.printStackTrace();
 		}
-		return convertToDto(player);
+		return player;
 	}
 
 	
 	@Override
-	public void createPlayer(PlayerDto playerDto) {
-		Player player = convertToEntity(playerDto);
-		playerDao.createPlayer(player);		
+	public void createPlayer(Player playerDto) {
+		playerDao.createPlayer(playerDto);		
 	}
-	private PlayerDto convertToDto(Player player) {
-		PlayerDto playerDto = modelMapper.map(player, PlayerDto.class);
-	    return playerDto;
-	}
-	private Player convertToEntity(PlayerDto playerDto) {
-		Player player = modelMapper.map(playerDto, Player.class);
-	    return player;
+	
+	
+
+	@Override
+	public boolean authenticate(String userName, String password) {
+		return playerDao.checkCredentials(userName,password);
 	}
 		
 }

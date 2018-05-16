@@ -2,16 +2,16 @@ package it.ncorti.emgvisualizer.DataAnalysis.models;
 
 public class Classification {
 
-    private float conf;
+    private float confidence;
     private String label;
 
     Classification() {
-        this.conf = -1.0F;
+        this.confidence = -1.0F;
         this.label = null;
     }
 
     void update(float conf, String label) {
-        this.conf = conf;
+        this.confidence = conf;
         this.label = label;
     }
 
@@ -20,6 +20,6 @@ public class Classification {
     }
 
     public float getConf() {
-        return conf;
+        return confidence;
     }
 }

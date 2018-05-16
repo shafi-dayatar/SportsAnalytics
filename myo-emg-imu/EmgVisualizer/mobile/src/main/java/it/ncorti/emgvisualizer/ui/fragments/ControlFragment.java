@@ -19,6 +19,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -218,7 +219,9 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
             else {
                 controlledSensor.stopMeasurement();
 
-                System.out.println("@@@@@@@@@ Start collecting IMU Data @@@@@@@@");
+                new Thread(new StoreImuData(controlledSensor.getIMUDataPoints())).start();
+
+                /*System.out.println("@@@@@@@@@ Start collecting IMU Data @@@@@@@@");
                 try{
                     String filePath = getActivity().getFilesDir().getPath().toString() + "/imu.csv";
                     System.out.println(filePath);
@@ -287,7 +290,7 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
                     readCsvData();
                 }catch (Exception e){
                     e.printStackTrace();
-                }
+                }*/
             }
         }
     }
@@ -306,6 +309,44 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
         String [] nextEmg;
         while ((nextEmg = readerEmf.readNext()) != null) {
             System.out.println(nextEmg[0] +"<-->"+ nextEmg[1] +" <-->"+ nextEmg[2]+"<--> "+ nextEmg[3]+"<--> "+nextEmg[4]+"<--> "+ nextEmg[5]+" <-->"+ nextEmg[6]+"<--> "+ nextEmg[7]+"<--> "+ nextEmg[8]);
+        }
+    }
+
+    class StoreImuData implements  Runnable {
+        LinkedList<ImuDataPoint> dataList;
+
+        public StoreImuData(LinkedList<ImuDataPoint> result) {
+            dataList = result;
+        }
+
+        @Override
+        public void run() {
+            System.out.println("@@@@@@@@@ Thread Started to save the data @@@@@@@@");
+            try {
+                File downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                String filePath = downloads.getPath().toString()+"/imu.csv";
+                System.out.println(filePath);
+
+                File file = new File(filePath);
+                // if file doesnt exists, then create it
+                if (!file.exists()) {
+                    file.createNewFile();
+                }
+                FileWriter filewriter = new FileWriter(file.getAbsoluteFile());
+                filewriter.write("timestamp,orientation_x,orientation_y,orientation_z,"+
+                        "orientation_w,AccX,AccY,AccZ,GyroX,GyroY,GyroZ");
+                StringBuilder data = new StringBuilder();
+                for (ImuDataPoint point : dataList) {
+                    data.append(String.valueOf(point.getTimestamp())+",");
+                    data.append(point.getIMUData()+"\n");
+                }
+                filewriter.write(data.toString());
+                filewriter.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("@@@@@@@@@ Thread Ended to save the data @@@@@@@@");
+
         }
     }
 }
