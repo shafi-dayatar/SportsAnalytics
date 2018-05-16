@@ -17,14 +17,15 @@ package it.ncorti.emgvisualizer.ui.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.ui.LiveDetect;
+
 
 /**
  * Fragment for showing home information.
@@ -36,7 +37,7 @@ public class HomeFragment extends Fragment {
      */
     public HomeFragment() {
     }
-
+    private LinearLayout live_stats;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +47,14 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
-
+         live_stats = (LinearLayout)view.findViewById(R.id.LiveResults);
+        live_stats.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent_live = new Intent(getActivity(), LiveDetect.class);
+                startActivity(intent_live);
+            }
+        });
 
 
         return view;

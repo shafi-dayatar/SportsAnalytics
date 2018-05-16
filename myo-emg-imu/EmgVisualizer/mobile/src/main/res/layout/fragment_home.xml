@@ -1,10 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/t_r"
                 android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/Stats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/margin_med"
+        android:background="@android:color/background_dark"
+        android:alpha="0.5"
+        android:clickable="true"
+        android:elevation="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_low"
+            android:layout_gravity="fill_vertical"
+            android:paddingBottom="66dp"
+            android:text="Statistics"
+            android:textColor="@color/ColorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LiveResults"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/Stats"
+        android:layout_margin="@dimen/margin_med"
+        android:clickable="true"
+        android:background="@android:color/background_dark"
+        android:alpha="0.5"
+        android:elevation="15dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/margin_low"
+            android:layout_gravity="fill_vertical"
+            android:paddingBottom="66dp"
+            android:text="Live Detection"
+            android:textColor="@color/ColorWhite"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
+    </LinearLayout>
 </RelativeLayout>
