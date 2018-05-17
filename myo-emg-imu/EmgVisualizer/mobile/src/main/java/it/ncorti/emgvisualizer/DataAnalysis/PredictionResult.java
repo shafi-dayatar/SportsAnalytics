@@ -1,8 +1,6 @@
-package it.ncorti.emgvisualizer;
+package it.ncorti.emgvisualizer.DataAnalysis;
 
 import java.util.HashMap;
-
-import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 
 public class PredictionResult {
 
