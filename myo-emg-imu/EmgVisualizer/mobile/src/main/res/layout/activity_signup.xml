@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="30dp"
-        android:inputType="text"
+        android:inputType="number"
         android:ems="10"
         android:hint="Age"
         android:textSize="20sp"

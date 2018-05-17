@@ -1,7 +1,9 @@
 package it.ncorti.emgvisualizer.ui.views;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -71,13 +73,6 @@ public class Login extends AppCompatActivity{
 
     }
     private void validate(String userEmail, String uPassword){
-//        if ((userEmail.equals("admin.team@gmail.com"))&&(uPassword.equals("admin"))){
-//            Intent intent = new Intent(Login.this, MainActivity.class);
-//            startActivity(intent);
-//        } else{
-//            Error = (TextView)findViewById(it.ncorti.emgvisualizer.R.id.textView5);
-//            Error.setText("Username and Password pair do not exist!!");
-//        }
         authenticateRestHandle(userEmail, uPassword);
     }
 
@@ -93,8 +88,9 @@ public class Login extends AppCompatActivity{
                 new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    //TODO: handle success
-                    System.out.println(response);
+                    SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putString("emailid", userEmail);
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);
                 }
