@@ -31,7 +31,9 @@
         <activity
             android:name=".ui.MainActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.LiveDetect"></activity>
+        <activity android:name=".ui.LiveDetect" />
+        <activity android:name=".ui.Stats" />
+        <activity android:name=".ui.Signup"></activity>
     </application>
 
 </manifest>

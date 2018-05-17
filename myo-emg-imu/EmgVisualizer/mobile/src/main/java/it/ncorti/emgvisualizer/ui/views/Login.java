@@ -30,7 +30,9 @@ import java.util.Map;
 import it.ncorti.emgvisualizer.DTO.Player;
 import it.ncorti.emgvisualizer.R;
 import it.ncorti.emgvisualizer.ui.MainActivity;
+
 import it.ncorti.emgvisualizer.utils.Constants;
+import it.ncorti.emgvisualizer.ui.Signup;
 
 
 public class Login extends AppCompatActivity{
@@ -40,6 +42,7 @@ public class Login extends AppCompatActivity{
     private TextView Error;
     RequestQueue requestQueue;
 
+    private Button Signup;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -49,6 +52,7 @@ public class Login extends AppCompatActivity{
         email = (EditText)findViewById(it.ncorti.emgvisualizer.R.id.editText);
         password = (EditText)findViewById(it.ncorti.emgvisualizer.R.id.editText2);
         Login = (Button)findViewById(it.ncorti.emgvisualizer.R.id.button3);
+        Signup = (Button)findViewById(it.ncorti.emgvisualizer.R.id.button4);
 
         Login.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -57,6 +61,13 @@ public class Login extends AppCompatActivity{
             }
         });
 
+        Signup.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent_signup = new Intent(Login.this, Signup.class);
+                startActivity(intent_signup);
+            }
+        });
 
     }
     private void validate(String userEmail, String uPassword){

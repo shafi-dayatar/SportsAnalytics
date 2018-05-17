@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 
 import it.ncorti.emgvisualizer.R;
 import it.ncorti.emgvisualizer.ui.LiveDetect;
+import it.ncorti.emgvisualizer.ui.Stats;
 
 
 /**
@@ -38,6 +39,7 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
     }
     private LinearLayout live_stats;
+    private LinearLayout chart;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,14 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        chart = (LinearLayout)view.findViewById(R.id.Stats);
+        chart.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Intent intent_chart = new Intent(getActivity(), Stats.class);
+                startActivity(intent_chart);
+            }
+        });
 
         return view;
     }
