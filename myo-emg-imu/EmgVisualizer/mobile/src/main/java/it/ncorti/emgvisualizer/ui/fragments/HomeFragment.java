@@ -22,9 +22,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.model.Sensor;
 import it.ncorti.emgvisualizer.ui.LiveDetect;
+import it.ncorti.emgvisualizer.ui.MySensorManager;
 import it.ncorti.emgvisualizer.ui.Stats;
 
 
@@ -38,23 +41,31 @@ public class HomeFragment extends Fragment {
      */
     public HomeFragment() {
     }
+    private Sensor controlledSensor;
     private LinearLayout live_stats;
     private LinearLayout chart;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.controlledSensor = MySensorManager.getInstance().getMyo();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_home, container, false);
-         live_stats = (LinearLayout)view.findViewById(R.id.LiveResults);
+        live_stats = (LinearLayout)view.findViewById(R.id.LiveResults);
         live_stats.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent_live = new Intent(getActivity(), LiveDetect.class);
-                startActivity(intent_live);
+                if(controlledSensor == null || !controlledSensor.isConnected()) {
+                    Toast.makeText(getActivity(), "Use Device Settings to connect the Myo", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    controlledSensor.startMeasurement("BOTH");
+                    Intent intent_live = new Intent(getActivity(), LiveDetect.class);
+                    startActivity(intent_live);
+                }
             }
         });
 

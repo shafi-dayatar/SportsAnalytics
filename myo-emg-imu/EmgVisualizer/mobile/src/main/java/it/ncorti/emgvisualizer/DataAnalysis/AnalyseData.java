@@ -98,16 +98,11 @@ public class AnalyseData {
     }
     public void predict(float[] data) {
         String text = "";
-        final Classification res = mClassifier.recognize(data); //
-        if (res.getLabel() == null) {
-            text += mClassifier.name() + ": ?\n";
-        } else {
-            //else output its name
-            text += String.format("%s: %s, %f\n", mClassifier.name(), res.getLabel(),
-                    res.getConf());
+        final Classification res = mClassifier.recognize(data);
+        PredictionResult predictionResult = PredictionResult.getInstance();
+        if (res.getLabel() != null) {
+            predictionResult.addResult(res.getLabel());
         }
-//            }
-        System.out.println(text);
     }
 
 }

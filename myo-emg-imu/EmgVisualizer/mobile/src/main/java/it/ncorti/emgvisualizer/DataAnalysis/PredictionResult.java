@@ -2,14 +2,20 @@ package it.ncorti.emgvisualizer.DataAnalysis;
 
 import java.util.HashMap;
 
+import it.ncorti.emgvisualizer.utils.ObservableHashMap;
+
 public class PredictionResult {
 
     private HashMap<Stroke, Integer> strokeCount = null;
+
+    private ObservableHashMap<String, Integer> strokeOutput = null;
     private static PredictionResult result = null;
     private final static Object gatekeeper = new Object();
 
     private PredictionResult(){
+
         strokeCount = new HashMap<Stroke, Integer>();
+        strokeOutput = new ObservableHashMap();
     }
 
     public static PredictionResult getInstance(){
@@ -20,6 +26,21 @@ public class PredictionResult {
             }
         }
         return result;
+    }
+    public synchronized void addResult(String type){
+        if (strokeOutput.containsKey(type))
+            strokeOutput.put(type, strokeOutput.get(type) + 1);
+        else
+            strokeOutput.put(type, 1);
+    }
+
+    public int getNumber(String type){
+        return strokeOutput.get(type);
+    }
+
+    public ObservableHashMap<String, Integer> getAllResults(){
+
+        return strokeOutput;
     }
 
     public synchronized void addResult(Stroke type){
@@ -38,3 +59,4 @@ public class PredictionResult {
     }
 
 }
+
