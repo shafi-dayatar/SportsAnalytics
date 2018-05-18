@@ -19,18 +19,18 @@ import it.ncorti.emgvisualizer.R;
 
 
 public class Stats extends AppCompatActivity {
-    int[] stats = new int[4];
+    int[] stats = {20,30,40,50};
     String strokes[] = {"Forehand-Slice", "Forehand-Topspin", "Backhand-Slice", "Backhand-Topspin"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
-        Bundle bundle = getIntent().getExtras();
+        /*Bundle bundle = getIntent().getExtras();
         stats[0] = bundle.getInt(Stroke.FORESLICE.toString());
         stats[1] = bundle.getInt(Stroke.FORETOP.toString());
         stats[2] = bundle.getInt(Stroke.BACKSLICE.toString());
-        stats[3] = bundle.getInt(Stroke.BACKTOP.toString());
+        stats[3] = bundle.getInt(Stroke.BACKTOP.toString());*/
         setupPieChart();
     }
 

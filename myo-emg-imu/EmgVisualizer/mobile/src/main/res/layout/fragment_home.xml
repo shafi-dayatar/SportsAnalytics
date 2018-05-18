@@ -16,7 +16,8 @@
         android:alpha="0.5"
         android:clickable="true"
         android:elevation="15dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:onClick="showDatePicker">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
