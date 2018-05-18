@@ -1,6 +1,7 @@
 package it.ncorti.emgvisualizer.ui;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
@@ -16,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -41,6 +43,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.ncorti.emgvisualizer.DTO.Game;
+import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
 import it.ncorti.emgvisualizer.utils.Constants;
 
@@ -59,12 +62,14 @@ public class SelectGame extends ListActivity {
        // gameListView = (ListView)findViewById(R.id.list1);
 
         CP = (CalendarView)findViewById(R.id.calendar1);
-        /*Calendar currentCalendarView = Calendar.getInstance();
+
+        Calendar currentCalendarView = Calendar.getInstance();
         Calendar calendar = currentCalendarView;
         calendar.set(Calendar.DAY_OF_MONTH,currentCalendarView.getActualMinimum(Calendar.DAY_OF_MONTH));
         CP.setMinDate(calendar.getTimeInMillis());
         calendar.set(Calendar.DAY_OF_MONTH, currentCalendarView.getActualMaximum(Calendar.DAY_OF_MONTH));
-        CP.setMaxDate(calendar.getTimeInMillis()); */ 
+        CP.setMaxDate(calendar.getTimeInMillis());
+
         CP.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day_in_month) {
@@ -82,6 +87,21 @@ public class SelectGame extends ListActivity {
         setListAdapter(adapter);
         getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
 
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        Game item = (Game) getListAdapter().getItem(position);
+        Bundle bundle = new Bundle();
+        bundle.putInt(Stroke.BackhandSlice.toString(),item.getBackhandSlice());
+        bundle.putInt(Stroke.BackhandTop.toString(),item.getBackhandTopspin());
+        bundle.putInt(Stroke.ForehandSlice.toString(),item.getForehandSlice());
+        bundle.putInt(Stroke.ForehandTop.toString(),item.getForehandTopspin());
+        bundle.putInt(Stroke.Serve.toString(),item.getServe());
+
+        Intent intent = new Intent(SelectGame.this, Stats.class);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
     private void getGameData(String requestDate) {
         String url = Constants.REST_URL_BASE+Constants.GAME_DATE;

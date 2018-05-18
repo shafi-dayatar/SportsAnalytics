@@ -30,12 +30,15 @@ import it.ncorti.emgvisualizer.DTO.Player;
 import it.ncorti.emgvisualizer.DataAnalysis.PredictionResult;
 import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.model.Sensor;
 import it.ncorti.emgvisualizer.utils.Constants;
 import it.ncorti.emgvisualizer.utils.ObservableHashMap;
 import it.ncorti.emgvisualizer.utils.Utils;
 
 public class LiveDetect extends AppCompatActivity {
     PredictionResult predictionResult = PredictionResult.getInstance();
+    private Sensor controlledSensor;
+
     ObservableHashMap<String,Integer> resultMap =  predictionResult.getAllResults();
     RequestQueue requestQueue;
     private Button FT;
@@ -51,6 +54,7 @@ public class LiveDetect extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(this);
+        this.controlledSensor = MySensorManager.getInstance().getMyo();
         setContentView(R.layout.activity_live_detect);
         endButton = (Button) findViewById(R.id.button);
         FT = (Button) findViewById(R.id.FT);
@@ -98,6 +102,7 @@ public class LiveDetect extends AppCompatActivity {
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                controlledSensor.stopMeasurement();
                 dialog.setContentView(R.layout.end_game_save_dialog);
                 dialog.setTitle("Save data");
                 TextView text = (TextView) dialog.findViewById(R.id.textDialogYesNoMessage);
@@ -109,7 +114,6 @@ public class LiveDetect extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
-                        //Enter code to save data
                         saveGame();
                     }
                 });
@@ -119,7 +123,8 @@ public class LiveDetect extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
-                        //Enter code to delete or dismiss data
+                        Intent intent = new Intent(LiveDetect.this, MainActivity.class);
+                        startActivity(intent);
 
                     }
                 });
@@ -133,7 +138,6 @@ public class LiveDetect extends AppCompatActivity {
         String startTime= bundle.getString("startTime");
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String emailId = settings.getString("emailid",null);
-        System.out.println("emailid" + emailId);
         Game game = new Game();
         Player player = new Player();
         player.setEmailid(emailId);
@@ -141,7 +145,6 @@ public class LiveDetect extends AppCompatActivity {
         game.setPlayedOn(Utils.getCurrentDate());
         game.setStartTime(startTime);
         game.setEndTime(Utils.getCurrentTime());
-        // TODO change as per labels
         game.setBackhandSlice(resultMap.get(Stroke.BackhandSlice.toString()));
         game.setBackhandTopspin(resultMap.get(Stroke.BackhandTop.toString()));
         game.setForehandSlice(resultMap.get(Stroke.ForehandSlice.toString()));
@@ -163,7 +166,7 @@ public class LiveDetect extends AppCompatActivity {
                         bundle.putInt(Stroke.BackhandTop.toString(),resultMap.get(Stroke.BackhandTop.toString()));
                         bundle.putInt(Stroke.ForehandSlice.toString(),resultMap.get(Stroke.ForehandSlice.toString()));
                         bundle.putInt(Stroke.ForehandTop.toString(),resultMap.get(Stroke.ForehandTop.toString()));
-                        // TODO change after model change
+                        bundle.putInt(Stroke.Serve.toString(),resultMap.get(Stroke.Serve.toString()));
                         intent.putExtras(bundle);
                         startActivity(intent);
                     }

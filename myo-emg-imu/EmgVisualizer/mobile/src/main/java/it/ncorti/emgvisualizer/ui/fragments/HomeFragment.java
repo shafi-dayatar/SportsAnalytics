@@ -216,7 +216,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void SetupBarChart(BarChart chart){
-        int groupCount = 7;
+        int groupCount = fh_topspinmap.size();
 
         ArrayList xVals = new ArrayList();
 
@@ -234,7 +234,6 @@ public class HomeFragment extends Fragment {
         for(Map.Entry<String, Integer> entry: fh_topspinmap.entrySet()){
             fh_Topspin.add(new BarEntry(i, entry.getValue()));
             i++;
-            System.out.println("FH_Topspin data " + entry.getKey() + " value " + entry.getValue());
         }
 
         for(Map.Entry<String, Integer> entry: fh_slicemap.entrySet()){
@@ -256,12 +255,16 @@ public class HomeFragment extends Fragment {
 
         set1 = new BarDataSet(fh_Topspin, "FH Topspin");
         set1.setColor(Color.CYAN);
+        set1.setValueTextColor(Color.WHITE);
         set2 = new BarDataSet(fh_Slice, "FH Slice");
         set2.setColor(Color.RED);
+        set2.setValueTextColor(Color.WHITE);
         set3 = new BarDataSet(bh_Topspin, "BH Topspin");
-        set3.setColor(Color.LTGRAY);
+        set3.setColor(Color.YELLOW);
+        set3.setValueTextColor(Color.WHITE);
         set4 = new BarDataSet(bh_Slice, "BH Topspin");
         set4.setColor(Color.GREEN);
+        set4.setValueTextColor(Color.WHITE);
 
         BarData data = new BarData(set1, set2, set3, set4);
         data.setValueFormatter(new LargeValueFormatter());
@@ -273,7 +276,11 @@ public class HomeFragment extends Fragment {
         chart.getData().setHighlightEnabled(false);
         chart.invalidate();
         chart.animateY(1000);
+        chart.setBackgroundColor(Color.TRANSPARENT); //set whatever color you prefer
+        chart.setDrawGridBackground(false);// this is a must
 
+//        chart.setDescription("This Week Progress");
+//        chart.setDescriptionColor(Color.WHITE);
 
         Legend l = chart.getLegend();
         l.setTextColor(Color.WHITE);
