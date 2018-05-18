@@ -132,6 +132,7 @@ public class LiveDetect extends AppCompatActivity {
         String startTime= bundle.getString("startTime");
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String emailId = settings.getString("emailid",null);
+        System.out.println("emailid" + emailId);
         Game game = new Game();
         Player player = new Player();
         player.setEmailid(emailId);

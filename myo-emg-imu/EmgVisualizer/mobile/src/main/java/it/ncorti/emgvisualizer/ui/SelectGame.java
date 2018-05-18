@@ -22,7 +22,7 @@ public class SelectGame extends AppCompatActivity {
         CP.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day_in_month) {
-                
+
             }
         });
     }
