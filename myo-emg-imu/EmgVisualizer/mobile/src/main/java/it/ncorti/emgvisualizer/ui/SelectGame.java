@@ -1,14 +1,17 @@
 package it.ncorti.emgvisualizer.ui;
 
+import android.app.ListActivity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
@@ -41,21 +44,27 @@ import it.ncorti.emgvisualizer.DTO.Game;
 import it.ncorti.emgvisualizer.R;
 import it.ncorti.emgvisualizer.utils.Constants;
 
-public class SelectGame extends AppCompatActivity {
+public class SelectGame extends ListActivity {
 
     private CalendarView CP;
     RequestQueue requestQueue;
-    private ListView games;
-    private ArrayList <Game> gamelist = new ArrayList<>();
-    private ArrayAdapter adapter_game;
+    private ListView gameListView;
+    private ArrayList<Game> gamelist = new ArrayList<>();
+    private GameAdapter adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_game);
         requestQueue = Volley.newRequestQueue(this);
-        games = (ListView)findViewById(R.id.list1);
+       // gameListView = (ListView)findViewById(R.id.list1);
 
         CP = (CalendarView)findViewById(R.id.calendar1);
+        /*Calendar currentCalendarView = Calendar.getInstance();
+        Calendar calendar = currentCalendarView;
+        calendar.set(Calendar.DAY_OF_MONTH,currentCalendarView.getActualMinimum(Calendar.DAY_OF_MONTH));
+        CP.setMinDate(calendar.getTimeInMillis());
+        calendar.set(Calendar.DAY_OF_MONTH, currentCalendarView.getActualMaximum(Calendar.DAY_OF_MONTH));
+        CP.setMaxDate(calendar.getTimeInMillis()); */ 
         CP.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView calendarView, int year, int month, int day_in_month) {
@@ -69,6 +78,10 @@ public class SelectGame extends AppCompatActivity {
 
             }
         });
+        adapter = new GameAdapter(this, gamelist);
+        setListAdapter(adapter);
+        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
     }
     private void getGameData(String requestDate) {
         String url = Constants.REST_URL_BASE+Constants.GAME_DATE;
@@ -87,25 +100,16 @@ public class SelectGame extends AppCompatActivity {
                             JsonParser parser = new JsonParser();
                             JsonObject jsonObject = (JsonObject) parser.parse(response);
                             JsonArray array = jsonObject.getAsJsonArray("responseObject");
+                            if(array.size() < 1) {
+
+                            }
                             for (int i=0;i<array.size();i++){
                                 JsonElement gameObject = array.get(i);
                                 Game game = gson.fromJson(gameObject,Game.class);
                                 gamelist.add(game);
-                                System.out.println("$$$$$$$$$$$" + game.getStartTime()+" "+game.getGameid());
                             }
-                            System.out.println("$$$$$$$$$$$$$$$$");
-                            System.out.println("%%%%%%%%%%%%"+games);
-                            adapter_game = new GameAdapter(getApplicationContext(),R.layout.game_list,R.id.list1, gamelist){
-                                public View getView(int position, View convertView, ViewGroup parent) {
-                                    View view = super.getView(position, convertView, parent);
-                                    System.out.println("333333333333333");
-                                    TextView time = (TextView)findViewById(R.id.start_time);
-                                    time.setTextColor(Color.WHITE);
-                                    return view;
-                                }
-                            };
-                            games.setAdapter(adapter_game);
-                            games.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+                            adapter.changeData(gamelist);
+
                         } catch(Exception e){
 
                         }

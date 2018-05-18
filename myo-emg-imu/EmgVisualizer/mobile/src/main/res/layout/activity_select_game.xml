@@ -5,22 +5,29 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/t_r">
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal">
         <CalendarView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/ColorWhite"
             android:id="@+id/calendar1">
         </CalendarView>
-        <android.support.v7.internal.view.menu.ListMenuItemView
-            android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/calendar1"
+        android:orientation="vertical" >
+        <TextView
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:id="@+id/separator"
+            android:text="List OF Games"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/list1">
+            android:background="#757678"
+            android:textColor="#f5c227" />
 
-        </android.support.v7.internal.view.menu.ListMenuItemView>
+        <ListView android:id="@android:id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
     </LinearLayout>
-
 </LinearLayout>

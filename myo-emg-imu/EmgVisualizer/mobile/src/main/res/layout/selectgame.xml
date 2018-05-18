@@ -12,7 +12,7 @@
         <CalendarView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/ColorWhite">
+        android:background="@color/ColorWhite">
         </CalendarView>
         <android.support.v7.internal.view.menu.ListMenuItemView
             android:layout_width="match_parent"

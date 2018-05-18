@@ -1,10 +1,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
     <TextView
-        android:id="@+id/start_time"
+        android:id="@+id/label1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="start_time" />
+        android:text="Game ID"
+        android:textSize="40px" >
+    </TextView>
+
+    <TextView
+        android:id="@+id/label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/label1"
+        android:text="Start Time"
+        android:textSize="30px" >
+    </TextView>
 
 </LinearLayout>
+
