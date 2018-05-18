@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import it.ncorti.emgvisualizer.DTO.Game;
+import it.ncorti.emgvisualizer.DTO.Player;
 import it.ncorti.emgvisualizer.DataAnalysis.PredictionResult;
 import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
@@ -102,7 +103,9 @@ public class LiveDetect extends AppCompatActivity {
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String emailId = settings.getString("emailid",null);
         Game game = new Game();
-        game.setEmailid(emailId);
+        Player player = new Player();
+        player.setEmailid(emailId);
+        game.setPlayer(player);
         game.setPlayedOn(Utils.getCurrentDate());
         game.setStartTime(startTime);
         game.setEndTime(Utils.getCurrentTime());

@@ -6,7 +6,7 @@ import java.sql.Time;
 
 public class Game {
 	private int gameid;
-	private String emailid;
+	private Player player;
 	private String playedOn;
 	private String location;
 	private String startTime;
@@ -18,12 +18,22 @@ public class Game {
 	private int forehandSlice;
 	private int serve;
 	public Game(){}
-	public Game(String emailid, String playedOn, String location, String startTime) {
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
+
+	public Game(Player player, String playedOn, String location, String startTime) {
 		super();
-		this.emailid = emailid;
+		this.player = player;
 		this.playedOn = playedOn;
 		this.location = location;
 		this.startTime = startTime;
+
 	}
 	public int getGameid() {
 		return gameid;
@@ -31,12 +41,7 @@ public class Game {
 	public void setGameid(int gameid) {
 		this.gameid = gameid;
 	}
-	public String getEmailid() {
-		return emailid;
-	}
-	public void setEmailid(String emailid) {
-		this.emailid = emailid;
-	}
+
 	public String getPlayedOn() {
 		return playedOn;
 	}
