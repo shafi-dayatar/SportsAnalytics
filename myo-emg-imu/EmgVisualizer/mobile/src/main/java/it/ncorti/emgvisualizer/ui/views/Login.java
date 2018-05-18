@@ -91,6 +91,7 @@ public class Login extends AppCompatActivity{
                     SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putString("emailid", userEmail);
+                    editor.apply();
                     Intent intent = new Intent(Login.this, MainActivity.class);
                     startActivity(intent);
                 }
@@ -118,7 +119,8 @@ public class Login extends AppCompatActivity{
 
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = settings.edit();
-        editor.putString("emailid", "madhuri@gmail.com");
+        editor.putString("emailid", "madhuribharathula@gmail.com");
+        editor.apply();
         Intent intent = new Intent(Login.this, MainActivity.class);
         startActivity(intent);
     }

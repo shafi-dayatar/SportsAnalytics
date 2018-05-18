@@ -2,9 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/t_r"
-                android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:background="@drawable/t_r"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
 
     <LinearLayout
         android:id="@+id/Stats"
@@ -12,16 +14,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/margin_med"
-        android:background="@android:color/background_dark"
         android:alpha="0.5"
+        android:background="@android:color/background_dark"
         android:clickable="true"
         android:elevation="15dp"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_low"
             android:layout_gravity="fill_vertical"
+            android:layout_margin="@dimen/margin_low"
             android:paddingBottom="66dp"
             android:text="Statistics"
             android:textColor="@color/ColorWhite"
@@ -35,16 +38,17 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/Stats"
         android:layout_margin="@dimen/margin_med"
-        android:clickable="true"
-        android:background="@android:color/background_dark"
         android:alpha="0.5"
+        android:background="@android:color/background_dark"
+        android:clickable="true"
         android:elevation="15dp"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/margin_low"
             android:layout_gravity="fill_vertical"
+            android:layout_margin="@dimen/margin_low"
             android:paddingBottom="66dp"
             android:text="Live Detection"
             android:textColor="@color/ColorWhite"
@@ -52,4 +56,21 @@
             android:textStyle="bold" />
 
     </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/LiveResults"
+        android:layout_marginTop="33dp"
+        android:scrollbars="vertical">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
 </RelativeLayout>
