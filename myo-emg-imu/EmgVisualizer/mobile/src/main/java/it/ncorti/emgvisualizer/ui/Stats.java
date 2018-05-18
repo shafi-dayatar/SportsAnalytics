@@ -14,19 +14,23 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
 
 
 public class Stats extends AppCompatActivity {
-
-    int stats[] = {20, 16, 30, 12};
+    int[] stats = new int[4];
     String strokes[] = {"Forehand-Slice", "Forehand-Topspin", "Backhand-Slice", "Backhand-Topspin"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
-
+        Bundle bundle = getIntent().getExtras();
+        stats[0] = bundle.getInt(Stroke.FORESLICE.toString());
+        stats[1] = bundle.getInt(Stroke.FORETOP.toString());
+        stats[2] = bundle.getInt(Stroke.BACKSLICE.toString());
+        stats[3] = bundle.getInt(Stroke.BACKTOP.toString());
         setupPieChart();
     }
 

@@ -1,29 +1,56 @@
 package it.ncorti.emgvisualizer.ui;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import it.ncorti.emgvisualizer.DTO.Game;
 import it.ncorti.emgvisualizer.DataAnalysis.PredictionResult;
 import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.utils.Constants;
 import it.ncorti.emgvisualizer.utils.ObservableHashMap;
+import it.ncorti.emgvisualizer.utils.Utils;
 
 public class LiveDetect extends AppCompatActivity {
     PredictionResult predictionResult = PredictionResult.getInstance();
-    ObservableHashMap resultMap =  predictionResult.getAllResults();
+    ObservableHashMap<String,Integer> resultMap =  predictionResult.getAllResults();
+    RequestQueue requestQueue;
     private Button FT;
     private Button FS;
     private Button BT;
     private Button BS;
     private Button button;
     private Handler handler;
+    private Button endButton;
+    private TextView Error;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestQueue = Volley.newRequestQueue(this);
         setContentView(R.layout.activity_live_detect);
+        endButton = (Button) findViewById(R.id.button);
         FT = (Button) findViewById(R.id.FT);
         FS = (Button) findViewById(R.id.FS);
         BT = (Button) findViewById(R.id.BT);
@@ -61,6 +88,66 @@ public class LiveDetect extends AppCompatActivity {
             }
         },handler);
 
+        endButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                saveGame();
+            }
+        });
 
     }
+    private void saveGame() {
+        Bundle bundle = getIntent().getExtras();
+        String startTime= bundle.getString("startTime");
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String emailId = settings.getString("emailid",null);
+        Game game = new Game();
+        game.setEmailid(emailId);
+        game.setPlayedOn(Utils.getCurrentDate());
+        game.setStartTime(startTime);
+        game.setEndTime(Utils.getCurrentTime());
+        // TODO change as per labels
+        game.setBackhandSlice(resultMap.get("Backhand"));
+        game.setBackhandTopspin(resultMap.get("Backhand"));
+        game.setForehandSlice(resultMap.get("Forehand"));
+        game.setForehandTopspin(resultMap.get("Forehand"));
+        String url = Constants.REST_URL_BASE+Constants.START_GAME;
+        Gson gson = new Gson();
+        String json = gson.toJson(game);
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(
+                Request.Method.POST, url, json,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        System.out.println(response);
+                        Intent intent = new Intent(LiveDetect.this, Stats.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Stroke.BACKSLICE.toString(),resultMap.get("Backhand"));
+                        bundle.putInt(Stroke.BACKTOP.toString(),resultMap.get("Backhand"));
+                        bundle.putInt(Stroke.FORESLICE.toString(),resultMap.get("Forehand"));
+                        bundle.putInt(Stroke.FORETOP.toString(),resultMap.get("Forehand"));
+                        // TODO change after model change
+                        intent.putExtras(bundle);
+                        startActivity(intent);
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                Error = (TextView) findViewById(it.ncorti.emgvisualizer.R.id.textView5);
+                Error.setText("Error in Saving the progress!!");
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+            }
+        };
+
+
+        requestQueue.add(jsonRequest);
+    }
+
 }

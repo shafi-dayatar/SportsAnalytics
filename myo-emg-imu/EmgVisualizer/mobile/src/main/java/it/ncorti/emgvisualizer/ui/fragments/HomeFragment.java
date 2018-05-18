@@ -29,6 +29,7 @@ import it.ncorti.emgvisualizer.model.Sensor;
 import it.ncorti.emgvisualizer.ui.LiveDetect;
 import it.ncorti.emgvisualizer.ui.MySensorManager;
 import it.ncorti.emgvisualizer.ui.Stats;
+import it.ncorti.emgvisualizer.utils.Utils;
 
 
 /**
@@ -64,6 +65,9 @@ public class HomeFragment extends Fragment {
                 else {
                     controlledSensor.startMeasurement("BOTH");
                     Intent intent_live = new Intent(getActivity(), LiveDetect.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("startTime", Utils.getCurrentTime());
+                    intent_live.putExtras(bundle);
                     startActivity(intent_live);
                 }
             }
