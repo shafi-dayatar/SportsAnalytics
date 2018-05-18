@@ -81,7 +81,16 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
      * Public constructor to create a new ControlFragment
      */
     public ControlFragment() {
+
         this.controlledSensor = MySensorManager.getInstance().getMyo();
+        File downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+        String filePath = downloads.getPath().toString()+"/imu.csv";
+
+        File file = new File(filePath);
+        // if file doesnt exists, then create it
+        if (file.exists()) {
+            file.delete();
+        }
     }
 
     @Override
@@ -217,9 +226,10 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
                 controlledSensor.startMeasurement("BOTH");
             }
             else {
-                controlledSensor.stopMeasurement();
 
                 new Thread(new StoreImuData(controlledSensor.getIMUDataPoints())).start();
+                controlledSensor.stopMeasurement();
+
 
                 /*System.out.println("@@@@@@@@@ Start collecting IMU Data @@@@@@@@");
                 try{
@@ -312,7 +322,7 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
         }
     }
 
-    class StoreImuData implements  Runnable {
+    public static class StoreImuData implements  Runnable {
         LinkedList<ImuDataPoint> dataList;
 
         public StoreImuData(LinkedList<ImuDataPoint> result) {
@@ -321,20 +331,22 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
 
         @Override
         public void run() {
-            System.out.println("@@@@@@@@@ Thread Started to save the data @@@@@@@@");
+            Log.d("saving data","@@@@@@@@@ Thread Started to save the data @@@@@@@@");
             try {
                 File downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
                 String filePath = downloads.getPath().toString()+"/imu.csv";
-                System.out.println(filePath);
 
                 File file = new File(filePath);
+                FileWriter filewriter;
                 // if file doesnt exists, then create it
                 if (!file.exists()) {
                     file.createNewFile();
+                    filewriter = new FileWriter(file.getAbsoluteFile());
+                    filewriter.write("timestamp,orientation_x,orientation_y,orientation_z,"+
+                            "orientation_w,AccX,AccY,AccZ,GyroX,GyroY,GyroZ");
+                }else {
+                    filewriter = new FileWriter(file.getAbsoluteFile(), true);
                 }
-                FileWriter filewriter = new FileWriter(file.getAbsoluteFile());
-                filewriter.write("timestamp,orientation_x,orientation_y,orientation_z,"+
-                        "orientation_w,AccX,AccY,AccZ,GyroX,GyroY,GyroZ");
                 StringBuilder data = new StringBuilder();
                 for (ImuDataPoint point : dataList) {
                     data.append(String.valueOf(point.getTimestamp())+",");
@@ -345,7 +357,7 @@ public class ControlFragment extends Fragment implements View.OnClickListener, C
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("@@@@@@@@@ Thread Ended to save the data @@@@@@@@");
+            Log.d("saving data","@@@@@@@@@ Thread Ended to save the data @@@@@@@@");
 
         }
     }

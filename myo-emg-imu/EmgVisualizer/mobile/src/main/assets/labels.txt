@@ -1,3 +1,6 @@
-Backhand
-Forehand
-No Swing
+BackhandSlice
+BackhandTop
+ForehandSlice
+ForehandTop
+NoSwing
+Serve

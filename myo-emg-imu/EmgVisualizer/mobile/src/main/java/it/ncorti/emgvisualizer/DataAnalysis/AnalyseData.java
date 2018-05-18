@@ -41,7 +41,7 @@ public class AnalyseData {
 
                     mClassifier = TensorflowClassifier.create(assetManager, "Keras",
                             "tensorflow_lite_stroke_prediction.pb", "labels.txt", 50,
-                            "input_input", "output/Softmax", false);
+                            "conv2d_1_input", "dense_3/Softmax", false);
                     //Log.d("classifier", mClassifier.name());
 
 
