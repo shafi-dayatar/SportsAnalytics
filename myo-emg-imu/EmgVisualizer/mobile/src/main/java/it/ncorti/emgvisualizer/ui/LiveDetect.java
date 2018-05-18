@@ -62,21 +62,22 @@ public class LiveDetect extends AppCompatActivity {
             @Override
             public void onPut(ObservableHashMap map, Object key, Object value) {
                 System.out.println("-------------Key is -------------"+ key);
-                if (key.equals(Stroke.FORETOP)) {
+                if (key.equals(Stroke.ForehandTop.toString())) {
                     button = FT;
-                } else if (key.equals(Stroke.FORESLICE)) {
+                } else if (key.equals(Stroke.ForehandSlice.toString())) {
                     button = FS;
-                } else if (key.equals(Stroke.BACKSLICE)) {
+                } else if (key.equals(Stroke.BackhandSlice.toString())) {
                     button = BS;
-                } else if (key.equals(Stroke.BACKTOP)) {
+                } else if (key.equals(Stroke.BackhandTop.toString())) {
                     button = BT;
                 } // TODO comment below lies after new model
-                else if(key.equals("Backhand")){
-                    button = BS;
-                } else if(key.equals("Forehand")){
-                    button = FS;
-                }
+//                else if(key.equals("Backhand")){
+//                    button = BS;
+//                } else if(key.equals("Forehand")){
+//                    button = FS;
+//                }
                 if (button != null) {
+                    System.out.println("Inisde Button ");
                     button.setBackgroundResource(R.drawable.rounded_button2);
                     button.setText(key + "  " + value);
 
@@ -141,10 +142,11 @@ public class LiveDetect extends AppCompatActivity {
         game.setStartTime(startTime);
         game.setEndTime(Utils.getCurrentTime());
         // TODO change as per labels
-        game.setBackhandSlice(resultMap.get("Backhand"));
-        game.setBackhandTopspin(resultMap.get("Backhand"));
-        game.setForehandSlice(resultMap.get("Forehand"));
-        game.setForehandTopspin(resultMap.get("Forehand"));
+        game.setBackhandSlice(resultMap.get(Stroke.BackhandSlice.toString()));
+        game.setBackhandTopspin(resultMap.get(Stroke.BackhandTop.toString()));
+        game.setForehandSlice(resultMap.get(Stroke.ForehandSlice.toString()));
+        game.setForehandTopspin(resultMap.get(Stroke.ForehandTop.toString()));
+        game.setServe(resultMap.get(Stroke.Serve.toString()));
         String url = Constants.REST_URL_BASE+Constants.START_GAME;
         Gson gson = new Gson();
         String json = gson.toJson(game);
@@ -157,10 +159,10 @@ public class LiveDetect extends AppCompatActivity {
                         System.out.println(response);
                         Intent intent = new Intent(LiveDetect.this, Stats.class);
                         Bundle bundle = new Bundle();
-                        bundle.putInt(Stroke.BACKSLICE.toString(),resultMap.get("Backhand"));
-                        bundle.putInt(Stroke.BACKTOP.toString(),resultMap.get("Backhand"));
-                        bundle.putInt(Stroke.FORESLICE.toString(),resultMap.get("Forehand"));
-                        bundle.putInt(Stroke.FORETOP.toString(),resultMap.get("Forehand"));
+                        bundle.putInt(Stroke.BackhandSlice.toString(),resultMap.get(Stroke.BackhandSlice.toString()));
+                        bundle.putInt(Stroke.BackhandTop.toString(),resultMap.get(Stroke.BackhandTop.toString()));
+                        bundle.putInt(Stroke.ForehandSlice.toString(),resultMap.get(Stroke.ForehandSlice.toString()));
+                        bundle.putInt(Stroke.ForehandTop.toString(),resultMap.get(Stroke.ForehandTop.toString()));
                         // TODO change after model change
                         intent.putExtras(bundle);
                         startActivity(intent);

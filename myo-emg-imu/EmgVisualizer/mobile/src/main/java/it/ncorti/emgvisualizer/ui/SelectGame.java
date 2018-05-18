@@ -1,11 +1,18 @@
 package it.ncorti.emgvisualizer.ui;
 
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -38,11 +45,16 @@ public class SelectGame extends AppCompatActivity {
 
     private CalendarView CP;
     RequestQueue requestQueue;
+    private ListView games;
+    private ArrayList <Game> gamelist = new ArrayList<>();
+    private ArrayAdapter adapter_game;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_game);
         requestQueue = Volley.newRequestQueue(this);
+        games = (ListView)findViewById(R.id.list1);
+
         CP = (CalendarView)findViewById(R.id.calendar1);
         CP.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
@@ -66,7 +78,6 @@ public class SelectGame extends AppCompatActivity {
         url  = url+"?requestDate="+requestDate+"&emailId="+emailId;
         System.out.println("url" + url);
 
-        final List<Game> gameList = new ArrayList();
         final Gson gson = new Gson();
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
@@ -79,9 +90,22 @@ public class SelectGame extends AppCompatActivity {
                             for (int i=0;i<array.size();i++){
                                 JsonElement gameObject = array.get(i);
                                 Game game = gson.fromJson(gameObject,Game.class);
-                                gameList.add(game);
+                                gamelist.add(game);
                                 System.out.println("$$$$$$$$$$$" + game.getStartTime()+" "+game.getGameid());
                             }
+                            System.out.println("$$$$$$$$$$$$$$$$");
+                            System.out.println("%%%%%%%%%%%%"+games);
+                            adapter_game = new GameAdapter(getApplicationContext(),R.layout.game_list,R.id.list1, gamelist){
+                                public View getView(int position, View convertView, ViewGroup parent) {
+                                    View view = super.getView(position, convertView, parent);
+                                    System.out.println("333333333333333");
+                                    TextView time = (TextView)findViewById(R.id.start_time);
+                                    time.setTextColor(Color.WHITE);
+                                    return view;
+                                }
+                            };
+                            games.setAdapter(adapter_game);
+                            games.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
                         } catch(Exception e){
 
                         }
