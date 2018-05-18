@@ -17,14 +17,23 @@ package it.ncorti.emgvisualizer.ui.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.BarData;
@@ -35,10 +44,18 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import it.ncorti.emgvisualizer.DTO.Game;
 import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
 import it.ncorti.emgvisualizer.model.Sensor;
@@ -46,6 +63,7 @@ import it.ncorti.emgvisualizer.ui.LiveDetect;
 import it.ncorti.emgvisualizer.ui.MySensorManager;
 import it.ncorti.emgvisualizer.ui.SelectGame;
 import it.ncorti.emgvisualizer.ui.Stats;
+import it.ncorti.emgvisualizer.utils.Constants;
 import it.ncorti.emgvisualizer.utils.Utils;
 
 
@@ -59,6 +77,11 @@ public class HomeFragment extends Fragment {
     float barWidth = 0.3f;
     float barSpace;
     float groupSpace = 0.4f;
+    final Map<String, Integer> fh_topspinmap = new HashMap<>();
+    final Map<String, Integer> bh_topspinmap = new HashMap<>();
+    final Map<String, Integer> fh_slicemap = new HashMap<>();
+    final Map<String, Integer> bh_slicemap = new HashMap<>();
+    RequestQueue requestQueue;
 
     /**
      * Public constructor to create a new HomeFragment
@@ -106,62 +129,128 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        setupBarChart(chart);
+        requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+
+        getData(chart);
 
         return view;
     }
 
 
-    private void setupBarChart(BarChart chart) {
+    private void getData(BarChart chart) {
 
+        String url = Constants.REST_URL_BASE + Constants.WEEKLY_DATA;
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String emailId = settings.getString("emailid",null);
+
+        url  = url+"?emailId="+emailId;
+        System.out.println("url" + url);
+
+        final List<Game> gameList = new ArrayList();
+        final BarChart chartdata = chart;
+        final Gson gson = new Gson();
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JsonParser parser = new JsonParser();
+                            JsonObject jsonObject = (JsonObject) parser.parse(response);
+                            JsonArray array = jsonObject.getAsJsonArray("responseObject");
+                            for (int i=0;i<array.size();i++){
+                                JsonElement gameObject = array.get(i);
+                                Game game = gson.fromJson(gameObject,Game.class);
+                                gameList.add(game);
+                                System.out.println("$$$$$$$$$$$" + game.getForehandTopspin() + "Played on " + game.getPlayedOn());
+                                if(!fh_topspinmap.containsKey(game.getPlayedOn())){
+                                    fh_topspinmap.put(game.getPlayedOn(), game.getForehandTopspin());
+                                }
+                                else {
+                                    fh_topspinmap.put(game.getPlayedOn(), fh_topspinmap.get(game.getPlayedOn()) + game.getForehandTopspin());
+                                }
+                                if(!bh_topspinmap.containsKey(game.getPlayedOn())){
+                                    bh_topspinmap.put(game.getPlayedOn(), game.getBackhandTopspin());
+                                }
+                                else {
+                                    bh_topspinmap.put(game.getPlayedOn(), game.getBackhandTopspin() + game.getBackhandTopspin());
+                                }
+                                if(!fh_slicemap.containsKey(game.getPlayedOn())){
+                                    fh_slicemap.put(game.getPlayedOn(), game.getForehandTopspin());
+                                }
+                                else {
+                                    fh_slicemap.put(game.getPlayedOn(), game.getForehandTopspin() + game.getForehandTopspin());
+                                }if(!bh_slicemap.containsKey(game.getPlayedOn())){
+                                    bh_slicemap.put(game.getPlayedOn(), game.getForehandTopspin());
+                                }
+                                else {
+                                    bh_slicemap.put(game.getPlayedOn(), game.getForehandTopspin() + game.getForehandTopspin());
+                                }
+                            }
+                            SetupBarChart(chartdata);
+                        } catch(Exception e){
+                            System.out.println("Error" + e);
+
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                })
+        {
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                return headers;
+
+            }
+        };
+        System.out.println("Before string request");
+        requestQueue.add(stringRequest);
+        System.out.println("after string request");
+    }
+
+    public void SetupBarChart(BarChart chart){
         int groupCount = 7;
 
         ArrayList xVals = new ArrayList();
 
-        xVals.add("Day 1");
-        xVals.add("Day 2");
-        xVals.add("Day 3");
-        xVals.add("Day 4");
-        xVals.add("Day 5");
-        xVals.add("Day 6");
-        xVals.add("Day 7");
+        for(Map.Entry<String, Integer> entry: fh_topspinmap.entrySet()){
+            xVals.add(entry.getKey());
+        }
+
+        int i =0;
 
         ArrayList fh_Topspin = new ArrayList();
         ArrayList fh_Slice = new ArrayList();
         ArrayList bh_Topspin = new ArrayList();
         ArrayList bh_Slice = new ArrayList();
 
-        fh_Topspin.add(new BarEntry(1, (float) 1));
-        fh_Topspin.add(new BarEntry(2, (float) 2));
-        fh_Topspin.add(new BarEntry(3, (float) 3));
-        fh_Topspin.add(new BarEntry(4, (float) 4));
-        fh_Topspin.add(new BarEntry(5, (float) 5));
-        fh_Topspin.add(new BarEntry(6, (float) 6));
-        fh_Topspin.add(new BarEntry(7, (float) 7));
+        for(Map.Entry<String, Integer> entry: fh_topspinmap.entrySet()){
+            fh_Topspin.add(new BarEntry(i, entry.getValue()));
+            i++;
+            System.out.println("FH_Topspin data " + entry.getKey() + " value " + entry.getValue());
+        }
 
-        fh_Slice.add(new BarEntry(1, (float) 1));
-        fh_Slice.add(new BarEntry(2, (float) 4));
-        fh_Slice.add(new BarEntry(3, (float) 6));
-        fh_Slice.add(new BarEntry(4, (float) 8));
-        fh_Slice.add(new BarEntry(5, (float) 1));
-        fh_Slice.add(new BarEntry(6, (float) 3));
-        fh_Slice.add(new BarEntry(7, (float) 2));
+        for(Map.Entry<String, Integer> entry: fh_slicemap.entrySet()){
+            fh_Slice.add(new BarEntry(i, entry.getValue()));
+            i++;
+        }
 
-        bh_Topspin.add(new BarEntry(1, (float) 1));
-        bh_Topspin.add(new BarEntry(2, (float) 7));
-        bh_Topspin.add(new BarEntry(3, (float) 4));
-        bh_Topspin.add(new BarEntry(4, (float) 5));
-        bh_Topspin.add(new BarEntry(5, (float) 3));
-        bh_Topspin.add(new BarEntry(6, (float) 8));
-        bh_Topspin.add(new BarEntry(7, (float) 9));
+        for(Map.Entry<String, Integer> entry: bh_topspinmap.entrySet()){
+            bh_Topspin.add(new BarEntry(i, entry.getValue()));
+            i++;
+        }
 
-        bh_Slice.add(new BarEntry(1, (float) 5));
-        bh_Slice.add(new BarEntry(1, (float) 7));
-        bh_Slice.add(new BarEntry(1, (float) 2));
-        bh_Slice.add(new BarEntry(1, (float) 0));
-        bh_Slice.add(new BarEntry(1, (float) 8));
-        bh_Slice.add(new BarEntry(1, (float) 1));
-        bh_Slice.add(new BarEntry(1, (float) 9));
+        for(Map.Entry<String, Integer> entry: bh_slicemap.entrySet()){
+            bh_Slice.add(new BarEntry(i, entry.getValue()));
+            i++;
+        }
 
         BarDataSet set1, set2, set3, set4;
 
