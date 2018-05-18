@@ -44,6 +44,7 @@ import it.ncorti.emgvisualizer.R;
 import it.ncorti.emgvisualizer.model.Sensor;
 import it.ncorti.emgvisualizer.ui.LiveDetect;
 import it.ncorti.emgvisualizer.ui.MySensorManager;
+import it.ncorti.emgvisualizer.ui.SelectGame;
 import it.ncorti.emgvisualizer.ui.Stats;
 import it.ncorti.emgvisualizer.utils.Utils;
 
@@ -100,7 +101,7 @@ public class HomeFragment extends Fragment {
         chartPage.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                Intent intent_chart = new Intent(getActivity(), Stats.class);
+                Intent intent_chart = new Intent(getActivity(), SelectGame.class);
                 startActivity(intent_chart);
             }
         });
