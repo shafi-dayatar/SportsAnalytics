@@ -102,7 +102,7 @@ public class TensorflowClassifier implements Classifier {
         //using the interface
         //give it the input name, raw pixels from the drawing,
         //input size
-        Log.d("Pixels", Arrays.toString(pixels));
+        //Log.d("Pixels", Arrays.toString(pixels));
         tfHelper.feed(inputName, pixels, 1 ,10, 50, 1);
 
         //probabilities
@@ -121,8 +121,6 @@ public class TensorflowClassifier implements Classifier {
         //write it out to the view
         Classification ans = new Classification();
         for (int i = 0; i < output.length; ++i) {
-            System.out.println(output[i]);
-            System.out.println(labels.get(i));
             if (output[i] > THRESHOLD && output[i] > ans.getConf()) {
                 ans.update(output[i], labels.get(i));
             }
