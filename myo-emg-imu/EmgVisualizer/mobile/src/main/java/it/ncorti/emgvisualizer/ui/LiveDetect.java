@@ -1,5 +1,6 @@
 package it.ncorti.emgvisualizer.ui;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
@@ -89,10 +90,39 @@ public class LiveDetect extends AppCompatActivity {
             }
         },handler);
 
-        endButton.setOnClickListener(new View.OnClickListener(){
+
+        final Dialog dialog = new Dialog(this);
+
+        endButton = (Button)findViewById(R.id.button);
+        endButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                saveGame();
+            public void onClick(View view) {
+                dialog.setContentView(R.layout.end_game_save_dialog);
+                dialog.setTitle("Save data");
+                TextView text = (TextView) dialog.findViewById(R.id.textDialogYesNoMessage);
+                text.setText("Save this match data?");
+
+                Button yes = (Button) dialog.findViewById(R.id.btnDialogYes);
+
+                yes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        //Enter code to save data
+                        saveGame();
+                    }
+                });
+                Button no = (Button) dialog.findViewById(R.id.btnDialogNo);
+
+                no.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        dialog.dismiss();
+                        //Enter code to delete or dismiss data
+
+                    }
+                });
+                dialog.show();
             }
         });
 
@@ -117,6 +147,7 @@ public class LiveDetect extends AppCompatActivity {
         String url = Constants.REST_URL_BASE+Constants.START_GAME;
         Gson gson = new Gson();
         String json = gson.toJson(game);
+        System.out.println(json);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.POST, url, json,
                 new Response.Listener<JSONObject>() {
