@@ -236,4 +236,25 @@ public class MainActivity extends AppCompatActivity {
     public void changeFragmentMyoControl() {
         changeFragment(new ControlFragment(), POSIT_CONTROL);
     }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Exiting Application")
+                .setMessage("Are you sure you want to close this application?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        return;
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
 }
+
+
