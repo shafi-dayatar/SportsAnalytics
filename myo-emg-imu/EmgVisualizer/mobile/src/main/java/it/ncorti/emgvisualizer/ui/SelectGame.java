@@ -90,12 +90,12 @@ public class SelectGame extends ListActivity {
                 }
             }
         });
-        Calendar currentCalendarView = Calendar.getInstance();
+        /*Calendar currentCalendarView = Calendar.getInstance();
         Calendar calendar = currentCalendarView;
         calendar.set(Calendar.DAY_OF_MONTH,currentCalendarView.getActualMinimum(Calendar.DAY_OF_MONTH));
         CP.setMinDate(calendar.getTimeInMillis());
         calendar.set(Calendar.DAY_OF_MONTH, currentCalendarView.getActualMaximum(Calendar.DAY_OF_MONTH));
-        CP.setMaxDate(calendar.getTimeInMillis());
+        CP.setMaxDate(calendar.getTimeInMillis());*/
 
         CP.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
