@@ -81,11 +81,11 @@ public class SelectGame extends ListActivity {
             public void onClick(View view) {
                 //CP.setVisibility(View.);
                 if(CP.isShown()){
-                    show_calendar.setText("Hide Calendar");
+                    show_calendar.setText("Show Calendar");
                     CP.setVisibility(View.GONE);
                 }
                     else{
-                    show_calendar.setText("Show Calendar");
+                    show_calendar.setText("Hide Calendar");
                     CP.setVisibility(View.VISIBLE);
                 }
             }
