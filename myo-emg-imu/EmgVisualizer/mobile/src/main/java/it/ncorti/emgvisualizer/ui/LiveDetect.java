@@ -69,30 +69,28 @@ public class LiveDetect extends AppCompatActivity {
         resultMap.setOnEventListener(new ObservableHashMap.OnEventListener() {
             @Override
             public void onPut(ObservableHashMap map, Object key, Object value) {
-                System.out.println("s----->"+key+"  "+ value);
                 if (key.equals(Stroke.ForehandTop.toString())) {
                     button = FT;
-                    motionData.setText(Stroke.ForehandTop.toString());
+                    motionData.setText("Detected :"+Stroke.ForehandTop.toString());
                 } else if (key.equals(Stroke.ForehandSlice.toString())) {
                     button = FS;
-                    motionData.setText(Stroke.ForehandSlice.toString());
+                    motionData.setText("Detected :"+Stroke.ForehandSlice.toString());
 
                 } else if (key.equals(Stroke.BackhandSlice.toString())) {
                     button = BS;
-                    motionData.setText(Stroke.BackhandSlice.toString());
+                    motionData.setText("Detected :"+Stroke.BackhandSlice.toString());
 
                 } else if (key.equals(Stroke.BackhandTop.toString())) {
                     button = BT;
-                    motionData.setText(Stroke.BackhandTop.toString());
+                    motionData.setText("Detected :"+Stroke.BackhandTop.toString());
 
                 } else if (key.equals(Stroke.Serve.toString())){
                     button = Serve;
-                    motionData.setText(Stroke.Serve.toString());
+                    motionData.setText("Detected :"+Stroke.Serve.toString());
                 } else {
-                    motionData.setText(Stroke.NoSwing.toString());
+                    motionData.setText("Detected :"+Stroke.NoSwing.toString());
                 }
-                if (button != null && !key.equals(Stroke.NoSwing.toString())) {
-                    System.out.println("Inisde Button ");
+                if (button != null && !key.equals(Stroke.NoSwing.toString()) && (int)value !=0) {
                     button.setBackgroundResource(R.drawable.rounded_button2);
                     button.setText(key + "  " + value);
 
