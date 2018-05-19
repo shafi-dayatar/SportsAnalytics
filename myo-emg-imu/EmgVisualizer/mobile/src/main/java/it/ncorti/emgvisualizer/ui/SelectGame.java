@@ -101,6 +101,7 @@ public class SelectGame extends ListActivity {
 
         Intent intent = new Intent(SelectGame.this, Stats.class);
         intent.putExtras(bundle);
+        intent.putExtra("FROM_ACTIVITY", "Select_Game");
         startActivity(intent);
     }
     private void getGameData(String requestDate) {

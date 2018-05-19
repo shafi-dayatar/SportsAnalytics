@@ -1,5 +1,6 @@
 package it.ncorti.emgvisualizer.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import java.util.List;
 
 import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.ui.fragments.HomeFragment;
 
 
 public class Stats extends AppCompatActivity {
@@ -62,5 +64,20 @@ public class Stats extends AppCompatActivity {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        Intent backIntent = new Intent(Stats.this, MainActivity.class);
+        Intent intent = getIntent();
+        String previousActivity = intent.getStringExtra("FROM_ACTIVITY");
+
+        if(previousActivity.equals("Live")){
+            startActivity(backIntent);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }

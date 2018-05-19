@@ -168,6 +168,7 @@ public class LiveDetect extends AppCompatActivity {
                         bundle.putInt(Stroke.ForehandTop.toString(),resultMap.get(Stroke.ForehandTop.toString()));
                         bundle.putInt(Stroke.Serve.toString(),resultMap.get(Stroke.Serve.toString()));
                         intent.putExtras(bundle);
+                        intent.putExtra("FROM_ACTIVITY", "Live");
                         startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
