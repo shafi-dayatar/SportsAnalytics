@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -54,15 +55,41 @@ public class SelectGame extends ListActivity {
     private ListView gameListView;
     private ArrayList<Game> gamelist = new ArrayList<>();
     private GameAdapter adapter;
+    private Button show_calendar;
+    private TextView sep;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_game);
         requestQueue = Volley.newRequestQueue(this);
-       // gameListView = (ListView)findViewById(R.id.list1);
+        System.out.println("-------------------####");
+
+        show_calendar = (Button) findViewById(R.id.expand);
+        System.out.println("--------------------"+show_calendar.toString());
+
+
+        // gameListView = (ListView)findViewById(R.id.list1);
 
         CP = (CalendarView)findViewById(R.id.calendar1);
+        CP.setVisibility(View.GONE);
+        sep = (TextView) findViewById(R.id.separator);
+        sep.setVisibility(View.GONE);
 
+        show_calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //CP.setVisibility(View.);
+                if(CP.isShown()){
+                    show_calendar.setText("Hide Calendar");
+                    CP.setVisibility(View.GONE);
+                }
+                    else{
+                    show_calendar.setText("Show Calendar");
+                    CP.setVisibility(View.VISIBLE);
+                }
+            }
+        });
         Calendar currentCalendarView = Calendar.getInstance();
         Calendar calendar = currentCalendarView;
         calendar.set(Calendar.DAY_OF_MONTH,currentCalendarView.getActualMinimum(Calendar.DAY_OF_MONTH));
@@ -122,13 +149,19 @@ public class SelectGame extends ListActivity {
                             JsonObject jsonObject = (JsonObject) parser.parse(response);
                             JsonArray array = jsonObject.getAsJsonArray("responseObject");
                             if(array.size() < 1) {
+                                Toast.makeText(getApplicationContext(), "No game for this day!",
+                                        Toast.LENGTH_LONG).show();
+                                sep.setVisibility(View.GONE);
 
+                            } else{
+                                sep.setVisibility(View.VISIBLE);
                             }
                             for (int i=0;i<array.size();i++){
                                 JsonElement gameObject = array.get(i);
                                 Game game = gson.fromJson(gameObject,Game.class);
                                 gamelist.add(game);
                             }
+
                             adapter.changeData(gamelist);
 
                         } catch(Exception e){

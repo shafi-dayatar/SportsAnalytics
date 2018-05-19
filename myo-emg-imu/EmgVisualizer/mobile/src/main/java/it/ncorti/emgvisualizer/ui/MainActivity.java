@@ -66,19 +66,16 @@ public class MainActivity extends AppCompatActivity {
 
     /** Arrays of menu title strings */
     private String TITLES[] = {
-            "Home",
-            "Thalmic Myo",
+            "Home","Settings",
             "Search for Myo",
-            "Control panel",
-            "Graph viewer"};
+            "Control panel"};
 
     /** Array of icons reference ID, -1 if a divider */
     private int ICONS[] = {
             R.drawable.ic_home_grey600_24dp,
             -1,
             R.drawable.ic_magnify_grey600_24dp,
-            R.drawable.ic_myo_grey600_24dp,
-            R.drawable.ic_action};
+            R.drawable.ic_myo_grey600_24dp};
 
     /** Constant for Home menu position */
     private static final int POSIT_HOME = 1;

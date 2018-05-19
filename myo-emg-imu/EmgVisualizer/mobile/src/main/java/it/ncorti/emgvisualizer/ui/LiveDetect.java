@@ -64,7 +64,7 @@ public class LiveDetect extends AppCompatActivity {
         BT = (Button) findViewById(R.id.BT);
         BS = (Button) findViewById(R.id.BS);
         Serve = (Button) findViewById(R.id.Serve);
-        motionData = (TextView) findViewById(R.id.status);
+        motionData = (TextView) findViewById(R.id.detecting);
         handler = new Handler();
         resultMap.setOnEventListener(new ObservableHashMap.OnEventListener() {
             @Override
