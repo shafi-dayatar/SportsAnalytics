@@ -69,6 +69,7 @@ public class LiveDetect extends AppCompatActivity {
         resultMap.setOnEventListener(new ObservableHashMap.OnEventListener() {
             @Override
             public void onPut(ObservableHashMap map, Object key, Object value) {
+                System.out.println("s")
                 if (key.equals(Stroke.ForehandTop.toString())) {
                     button = FT;
                     motionData.setText(Stroke.ForehandTop.toString());
@@ -90,14 +91,14 @@ public class LiveDetect extends AppCompatActivity {
                 } else {
                     motionData.setText(Stroke.NoSwing.toString());
                 }
-                if (button != null) {
+                if (button != null && !key.equals(Stroke.NoSwing.toString())) {
                     System.out.println("Inisde Button ");
                     button.setBackgroundResource(R.drawable.rounded_button2);
                     button.setText(key + "  " + value);
 
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            button.setBackgroundResource(R.drawable.rounded_button);
+                            if(button !=null) button.setBackgroundResource(R.drawable.rounded_button);
                             button = null;
                         }
                     }, 500);
@@ -113,7 +114,6 @@ public class LiveDetect extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 controlledSensor.stopMeasurement();
-                predictionResult.resetMap();
                 dialog.setContentView(R.layout.end_game_save_dialog);
                 dialog.setTitle("Save data");
                 TextView text = (TextView) dialog.findViewById(R.id.textDialogYesNoMessage);
@@ -126,6 +126,8 @@ public class LiveDetect extends AppCompatActivity {
                     public void onClick(View view) {
                         dialog.dismiss();
                         saveGame();
+                        predictionResult.resetMap();
+
                     }
                 });
                 Button no = (Button) dialog.findViewById(R.id.btnDialogNo);
@@ -134,6 +136,7 @@ public class LiveDetect extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
+                        predictionResult.resetMap();
                         Intent intent = new Intent(LiveDetect.this, MainActivity.class);
                         startActivity(intent);
 

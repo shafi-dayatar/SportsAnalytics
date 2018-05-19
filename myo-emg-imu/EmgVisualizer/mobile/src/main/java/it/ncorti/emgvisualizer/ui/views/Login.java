@@ -82,7 +82,7 @@ public class Login extends AppCompatActivity{
         params.put("emailid", userEmail);
         params.put("password", uPassword);
 
-        /*JSONObject parameters = new JSONObject(params);
+        JSONObject parameters = new JSONObject(params);
         JsonObjectRequest jsonRequest = new JsonObjectRequest(
                 Request.Method.POST, url, parameters,
                 new Response.Listener<JSONObject>() {
@@ -113,17 +113,17 @@ public class Login extends AppCompatActivity{
 
 
         requestQueue.add(jsonRequest);
-        */
+
 
         //TODO uncmment above code and comment below
 
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        /*SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         SharedPreferences.Editor editor = settings.edit();
         editor.putString("emailid", "madhuribharathula@gmail.com");
         editor.apply();
         Intent intent = new Intent(Login.this, MainActivity.class);
         startActivity(intent);
-        finish();
+        finish();*/
     }
 
 }
