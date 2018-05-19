@@ -1,5 +1,6 @@
 package it.ncorti.emgvisualizer.ui;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,21 +17,23 @@ import java.util.List;
 
 import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.ui.fragments.HomeFragment;
 
 
 public class Stats extends AppCompatActivity {
-    int[] stats = {20,30,40,50};
-    String strokes[] = {"Forehand-Slice", "Forehand-Topspin", "Backhand-Slice", "Backhand-Topspin"};
+    int[] stats = {20,30,40,50,60};
+    String strokes[] = {"Forehand-Slice", "Forehand-Topspin", "Backhand-Slice", "Backhand-Topspin","serve"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_stats);
-        /*Bundle bundle = getIntent().getExtras();
-        stats[0] = bundle.getInt(Stroke.FORESLICE.toString());
-        stats[1] = bundle.getInt(Stroke.FORETOP.toString());
-        stats[2] = bundle.getInt(Stroke.BACKSLICE.toString());
-        stats[3] = bundle.getInt(Stroke.BACKTOP.toString());*/
+        Bundle bundle = getIntent().getExtras();
+        stats[0] = bundle.getInt(Stroke.ForehandSlice.toString(),0);
+        stats[1] = bundle.getInt(Stroke.ForehandTop.toString(),0);
+        stats[2] = bundle.getInt(Stroke.BackhandSlice.toString(),0);
+        stats[3] = bundle.getInt(Stroke.BackhandTop.toString(),0);
+        stats[4] = bundle.getInt(Stroke.Serve.toString(),0);
         setupPieChart();
     }
 
@@ -61,5 +64,20 @@ public class Stats extends AppCompatActivity {
         legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         legend.setDrawInside(false);
+    }
+
+    @Override
+    public void onBackPressed(){
+
+        Intent backIntent = new Intent(Stats.this, MainActivity.class);
+        Intent intent = getIntent();
+        String previousActivity = intent.getStringExtra("FROM_ACTIVITY");
+
+        if(previousActivity.equals("Live")){
+            startActivity(backIntent);
+        }
+        else {
+            super.onBackPressed();
+        }
     }
 }
