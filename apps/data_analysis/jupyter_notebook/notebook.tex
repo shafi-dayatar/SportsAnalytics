@@ -1,0 +1,921 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{Data\_Analysis of IMU data}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    This notebook is about identifying stroke and swing for tennis sports.
+
+We are using \href{https://www.myo.com/}{Myoarm band} a wearble device
+to be worn on your fore arm. This device has accelerometer, gyroscope
+and magnetometer. Along with that it also has eight EMG(Electic Myo
+graphy) which measues the activity of the muscle, using this it can
+identify type of gesture created by hand.
+
+We will be using Accelerometer and Gyroscope data to identify the stroke
+and swing. Typically acceleremeter data will help us find type of swing
+played(Topspin, Slice, Serve, Flat .etc) and gyroscope with help us to
+find fore hand and back hand stroke.
+
+Currently we are only considereing right handed player for the data
+collection and modelling, but this model should also work for the left
+handed player but the output/prediction would be totally opposite(Like
+forehand will be considered as a backhand).
+
+    Importing important libraries
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k+kn}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{scipy} \PY{k+kn}{as} \PY{n+nn}{sp}
+        \PY{k+kn}{from} \PY{n+nn}{scipy} \PY{k+kn}{import} \PY{n}{signal}
+        \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k+kn}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib.pyplot} \PY{k+kn}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{from} \PY{n+nn}{StrokeDetection} \PY{k+kn}{import} \PY{n}{StrokeDetection}
+        \PY{k+kn}{from} \PY{n+nn}{data\PYZus{}processing} \PY{k+kn}{import} \PY{o}{*}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+
+    Import data through pandas,
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{swing\PYZus{}types} \PY{o}{=} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{backhand\PYZus{}slice}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{backhand\PYZus{}topspin}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forehand\PYZus{}slice}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forehand\PYZus{}topspin}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{no\PYZus{}swing}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{serve}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}
+        \PY{c+c1}{\PYZsh{}swing\PYZus{}types = [\PYZdq{}forehand\PYZus{}topspin\PYZdq{}, \PYZdq{}backhand\PYZus{}topspin\PYZdq{}, \PYZdq{}backhand\PYZus{}slice\PYZdq{}, \PYZdq{}forehand\PYZus{}slice\PYZdq{}]}
+        
+        \PY{n}{path} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{./data/}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{forehand\PYZus{}topspin} \PY{o}{=} \PY{n}{path} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train\PYZus{}forehand\PYZus{}set1.csv}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{forehand\PYZus{}topspin} \PY{o}{=} \PY{n}{load\PYZus{}file}\PY{p}{(}\PY{n}{forehand\PYZus{}topspin}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forehand\PYZus{}topspin}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{backhand\PYZus{}topspin} \PY{o}{=} \PY{n}{path} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train\PYZus{}backhand\PYZus{}topspin\PYZus{}set2.csv}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{backhand\PYZus{}topspin} \PY{o}{=} \PY{n}{load\PYZus{}file}\PY{p}{(}\PY{n}{backhand\PYZus{}topspin}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{backhand\PYZus{}topspin}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{backhand\PYZus{}slice} \PY{o}{=} \PY{n}{path} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train\PYZus{}backhand\PYZus{}slice\PYZus{}set1.csv}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{backhand\PYZus{}slice} \PY{o}{=} \PY{n}{load\PYZus{}file}\PY{p}{(}\PY{n}{backhand\PYZus{}slice}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{backhand\PYZus{}slice}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        \PY{n}{forehand\PYZus{}slice} \PY{o}{=} \PY{n}{path} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{train\PYZus{}forehand\PYZus{}slice\PYZus{}set2.csv}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{forehand\PYZus{}slice} \PY{o}{=} \PY{n}{load\PYZus{}file}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/Users/shafidayatar/Desktop/train\PYZus{}forehand\PYZus{}slice.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forehand\PYZus{}slice}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{n}{noswing} \PY{o}{=} \PY{n}{load\PYZus{}file}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/Users/shafidayatar/Desktop/train\PYZus{}no\PYZus{}swing.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{noswing}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        \PY{n}{serve} \PY{o}{=} \PY{n}{load\PYZus{}file}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{/Users/shafidayatar/Desktop/training\PYZus{}serve\PYZus{}set1.csv}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{serve}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        
+        \PY{n}{stroke\PYZus{}data} \PY{o}{=} \PY{n}{merge\PYZus{}data}\PY{p}{(}\PY{p}{[}\PY{n}{forehand\PYZus{}topspin}\PY{p}{,} \PY{n}{backhand\PYZus{}topspin}\PY{p}{,} \PY{n}{backhand\PYZus{}slice}\PY{p}{,} \PY{n}{forehand\PYZus{}slice}\PY{p}{,} \PY{n}{serve}\PY{p}{]}\PY{p}{)}
+        \PY{n}{stroke\PYZus{}data}\PY{o}{.}\PY{n}{reset\PYZus{}index}\PY{p}{(}\PY{n}{drop}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+        
+        \PY{c+c1}{\PYZsh{}stroke\PYZus{}data = merge\PYZus{}data(forehand\PYZus{}topspin, backhand\PYZus{}topspin)}
+        \PY{c+c1}{\PYZsh{}stroke\PYZus{}data = merge\PYZus{}data(stroke\PYZus{}data, backhand\PYZus{}slice)}
+        \PY{n}{time}\PY{p}{,} \PY{n}{gyr}\PY{p}{,} \PY{n}{acc}\PY{p}{,} \PY{n}{quaternion}  \PY{o}{=} \PY{n}{get\PYZus{}lables}\PY{p}{(}\PY{n}{stroke\PYZus{}data}\PY{p}{)}
+        \PY{n}{stroke\PYZus{}y} \PY{o}{=} \PY{n}{get\PYZus{}y}\PY{p}{(}\PY{n}{stroke\PYZus{}data}\PY{p}{)}
+\end{Verbatim}
+
+
+    Given a stream of data from the Myo Device, our first goal is to
+identify the swing is happening or not.
+
+To accomplish this, we came up with the folling algorithm:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Normalize the X,Y,Z of accelerometer ( this gives the total G force
+  acting on the device)
+\item
+  Pass this Gforce to a butter filter
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Butter filter will reduce very high spikes of gforce and increase
+    the low spikes of gforce.
+  \item
+    We are creating a tunnel to accept those values which are in between
+    and leave those that are not useful
+  \end{enumerate}
+\item
+  Now we have the filter data, we create a threshold value of 1G,
+  anything above 1G is a swing.
+\item
+  We plot the graph to understand the working for the algowithm
+\end{enumerate}
+
+    This is helper fucntion which will help to plot different graph on
+runtime
+
+    This is about 3d geometery \# Why are we doing this? We want to show the
+actual path of the swing in 3d to the player. Using VR Technologies we
+can play the swing, using a dummy player and player can visualize the
+swing.
+
+Quaretion plays a very important role in 3d geometry and it overcomes
+the problem of gimbla lock. Using gyroscope and accelerometer we can
+find the orientation of the device with quaternions. Myo API has
+
+    We are identify swing from the data and plotting the first swing
+detected!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{swingPresent} \PY{o}{=} \PY{n}{StrokeDetection}\PY{o}{.}\PY{n}{identifyStroke}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{acc}\PY{p}{)}
+        \PY{n}{swingMidIndex}\PY{p}{,} \PY{n}{swingStartIndex}\PY{p}{,} \PY{n}{swingEndIndex}\PY{p}{,} \PY{n}{swingPresent} \PY{o}{=} \PY{n}{StrokeDetection}\PY{o}{.}\PY{n}{strokeIndexes}\PY{p}{(}\PY{n}{swingPresent}\PY{p}{)}
+        \PY{n}{startPos} \PY{o}{=} \PY{n}{swingStartIndex}\PY{p}{[}\PY{l+m+mi}{600}\PY{p}{]} \PY{o}{\PYZhy{}} \PY{l+m+mi}{30}
+        \PY{n}{endPos} \PY{o}{=} \PY{n}{swingEndIndex}\PY{p}{[}\PY{l+m+mi}{600}\PY{p}{]} \PY{o}{+} \PY{l+m+mi}{30}
+        
+        \PY{k}{print} \PY{p}{(}\PY{n}{stroke\PYZus{}y}\PY{p}{[}\PY{n}{swingMidIndex}\PY{p}{[}\PY{l+m+mi}{600}\PY{p}{]}\PY{p}{]}\PY{p}{)}
+        \PY{n}{StrokeDetection}\PY{o}{.}\PY{n}{plotSwingData}\PY{p}{(}\PY{n}{time}\PY{p}{,} \PY{n}{gyr}\PY{p}{,} \PY{n}{acc}\PY{p}{,} \PY{n}{quaternion}\PY{p}{,} \PY{n}{swingPresent}\PY{p}{,} \PY{n}{startPos}\PY{p}{,} \PY{n}{endPos} \PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+serve
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{trans\PYZus{}acc}\PY{p}{,} \PY{n}{velocity}\PY{p}{,} \PY{n}{pos} \PY{o}{=} \PY{n}{StrokeDetection}\PY{o}{.}\PY{n}{derive\PYZus{}vel\PYZus{}to\PYZus{}pos}\PY{p}{(}\PY{n}{acc}\PY{o}{.}\PY{n}{copy}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{n}{quaternion}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{p}{,} 
+                                                     \PY{n}{swingEndIndex}\PY{p}{,} \PY{n}{swingStartIndex}\PY{p}{,} \PY{n}{swingPresent}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{k+kn}{from} \PY{n+nn}{keras.layers} \PY{k+kn}{import} \PY{n}{Conv2D}\PY{p}{,} \PY{n}{MaxPooling2D}\PY{p}{,} \PY{n}{GlobalAveragePooling2D}
+        \PY{k+kn}{from} \PY{n+nn}{keras.layers} \PY{k+kn}{import} \PY{n}{Conv1D}
+        \PY{k+kn}{from} \PY{n+nn}{keras.layers} \PY{k+kn}{import} \PY{n}{Dropout}\PY{p}{,} \PY{n}{Flatten}\PY{p}{,} \PY{n}{Dense}\PY{p}{,} \PY{n}{BatchNormalization}\PY{p}{,} \PY{n}{LeakyReLU}
+        \PY{k+kn}{from} \PY{n+nn}{keras.models} \PY{k+kn}{import} \PY{n}{Sequential}
+        \PY{k+kn}{from} \PY{n+nn}{keras.utils} \PY{k+kn}{import} \PY{n}{plot\PYZus{}model}
+        \PY{k+kn}{from} \PY{n+nn}{keras.utils} \PY{k+kn}{import} \PY{n}{np\PYZus{}utils}
+        \PY{k+kn}{from} \PY{n+nn}{keras} \PY{k+kn}{import} \PY{n}{backend} \PY{k}{as} \PY{n}{K}
+        \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k+kn}{as} \PY{n+nn}{tf}
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow.python.tools} \PY{k+kn}{import} \PY{n}{freeze\PYZus{}graph}
+        \PY{k+kn}{from} \PY{n+nn}{tensorflow.python.tools} \PY{k+kn}{import} \PY{n}{optimize\PYZus{}for\PYZus{}inference\PYZus{}lib}
+        \PY{k+kn}{from} \PY{n+nn}{keras.callbacks} \PY{k+kn}{import} \PY{n}{ModelCheckpoint}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Users/shafidayatar/anaconda/envs/python2.7-DA/lib/python2.7/site-packages/h5py/\_\_init\_\_.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from .\_conv import register\_converters as \_register\_converters
+Using TensorFlow backend.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn.model\PYZus{}selection} \PY{k+kn}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+        \PY{k+kn}{from} \PY{n+nn}{sklearn.preprocessing} \PY{k+kn}{import} \PY{n}{OneHotEncoder}\PY{p}{,}\PY{n}{LabelEncoder}
+        
+        \PY{k}{def} \PY{n+nf}{getRandomMultiplier}\PY{p}{(}\PY{n}{yvalue}\PY{p}{)}\PY{p}{:}
+            \PY{k}{if} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{backhand\PYZus{}slice}\PY{l+s+s2}{\PYZdq{}} \PY{o}{==} \PY{n}{yvalue}\PY{p}{:}
+                \PY{k}{return} \PY{l+m+mf}{0.8}\PY{p}{,} \PY{l+m+mf}{1.2}
+            \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{backhand\PYZus{}topspin}\PY{l+s+s2}{\PYZdq{}} \PY{o}{==} \PY{n}{yvalue}\PY{p}{:}
+                \PY{k}{return} \PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{1.05}
+            \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forehand\PYZus{}slice}\PY{l+s+s2}{\PYZdq{}} \PY{o}{==} \PY{n}{yvalue}\PY{p}{:}
+                \PY{k}{return} \PY{l+m+mf}{0.95}\PY{p}{,} \PY{l+m+mf}{1.4}
+            \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forehand\PYZus{}topspin}\PY{l+s+s2}{\PYZdq{}} \PY{o}{==} \PY{n}{yvalue}\PY{p}{:}
+                \PY{k}{return} \PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{1.05}
+            \PY{k}{elif} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{serve}\PY{l+s+s2}{\PYZdq{}} \PY{o}{==} \PY{n}{yvalue}\PY{p}{:}
+                \PY{k}{return} \PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{1.05}
+            \PY{k}{else}\PY{p}{:}
+                \PY{k}{return} \PY{l+m+mf}{0.9}\PY{p}{,} \PY{l+m+mf}{1.1}
+            
+        
+        
+        \PY{k}{def} \PY{n+nf}{generate\PYZus{}train\PYZus{}test\PYZus{}swingIndex}\PY{p}{(}\PY{n}{swingMidIndex}\PY{p}{,} \PY{n}{stroke\PYZus{}types}\PY{p}{)}\PY{p}{:}
+            \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{X\PYZus{}test} \PY{o}{=} \PY{n}{X\PYZus{}val} \PY{o}{=} \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{y\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{p}{]}\PY{p}{)}
+            \PY{n}{swings} \PY{o}{=} \PY{n}{stroke\PYZus{}y}\PY{p}{[}\PY{n}{swingMidIndex}\PY{p}{]}
+            \PY{k}{for} \PY{n}{stroke} \PY{o+ow}{in} \PY{n}{stroke\PYZus{}types}\PY{p}{:}
+                \PY{n}{strokeIndex} \PY{o}{=} \PY{n}{swings}\PY{p}{[}\PY{n}{swings}\PY{o}{==}\PY{n}{stroke}\PY{p}{]}\PY{o}{.}\PY{n}{index}\PY{o}{.}\PY{n}{values}
+            
+                \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y1}\PY{p}{,} \PY{n}{y2} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{strokeIndex}\PY{p}{,} 
+                                                \PY{n}{swings}\PY{p}{[}\PY{n}{stroke\PYZus{}y}\PY{o}{==}\PY{n}{stroke}\PY{p}{]}\PY{p}{,} 
+                                                \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{,} 
+                                                \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+                \PY{n}{x2}\PY{p}{,} \PY{n}{x3}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{y3} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,}
+                                            \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+                
+                \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{x1}\PY{p}{)}\PY{p}{)}
+                \PY{n}{X\PYZus{}test} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{x2}\PY{p}{)}\PY{p}{)}
+                \PY{n}{X\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}val}\PY{p}{,} \PY{n}{x3}\PY{p}{)}\PY{p}{)}
+                \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y1}\PY{p}{)}\PY{p}{)}
+                \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{)}
+                \PY{n}{y\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}val}\PY{p}{,} \PY{n}{y3}\PY{p}{)}\PY{p}{)}
+                
+            \PY{k}{return} \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{X\PYZus{}val}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}val}
+        
+        \PY{k}{def} \PY{n+nf}{swingDataAugmenation}\PY{p}{(}\PY{n}{x}\PY{p}{,} \PY{n}{randStart}\PY{o}{=}\PY{l+m+mf}{0.9}\PY{p}{,} \PY{n}{randEnd}\PY{o}{=}\PY{l+m+mf}{1.1}\PY{p}{)}\PY{p}{:}
+            \PY{n}{x\PYZus{}features}\PY{p}{,} \PY{n}{y\PYZus{}label} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}
+            
+            \PY{c+c1}{\PYZsh{} for each swing generate 50, 3 matrix by sliding 15 data points before and 15 data points after}
+            \PY{c+c1}{\PYZsh{}this will give us 30 swings in total each swing. }
+            \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:} 
+                \PY{n}{Y\PYZus{}value} \PY{o}{=} \PY{n}{stroke\PYZus{}y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{p}{]}
+                \PY{n}{randStart}\PY{p}{,} \PY{n}{randEnd} \PY{o}{=} \PY{n}{getRandomMultiplier}\PY{p}{(}\PY{n}{Y\PYZus{}value}\PY{p}{)}
+                \PY{n}{rand} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{random}\PY{o}{.}\PY{n}{uniform}\PY{p}{(}\PY{n}{randStart}\PY{p}{,} \PY{n}{randEnd}\PY{p}{,}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{)}
+                \PY{k}{for} \PY{n}{i} \PY{o+ow}{in} \PY{n+nb}{range}\PY{p}{(}\PY{l+m+mi}{20}\PY{p}{)}\PY{p}{:}
+                    \PY{n}{a} \PY{o}{=} \PY{n}{acc}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index} \PY{o}{\PYZhy{}} \PY{l+m+mi}{25} \PY{o}{\PYZhy{}} \PY{n}{i} \PY{p}{:} \PY{n}{index} \PY{o}{+} \PY{l+m+mi}{25} \PY{o}{\PYZhy{}} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                    \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{multiply}\PY{p}{(}\PY{n}{a}\PY{p}{,} \PY{n}{rand}\PY{p}{[}\PY{n}{i}\PY{p}{]}\PY{p}{)}
+                    \PY{n}{g} \PY{o}{=} \PY{n}{gyr}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index} \PY{o}{\PYZhy{}} \PY{l+m+mi}{25} \PY{o}{\PYZhy{}} \PY{n}{i} \PY{p}{:} \PY{n}{index} \PY{o}{+} \PY{l+m+mi}{25} \PY{o}{\PYZhy{}} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                    \PY{n}{q} \PY{o}{=} \PY{n}{quaternion}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index} \PY{o}{\PYZhy{}} \PY{l+m+mi}{25} \PY{o}{\PYZhy{}} \PY{n}{i}\PY{p}{:}\PY{n}{index} \PY{o}{+} \PY{l+m+mi}{25} \PY{o}{\PYZhy{}} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                    \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                    \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{q}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                    \PY{n}{x\PYZus{}features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                    \PY{n}{y\PYZus{}label}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Y\PYZus{}value}\PY{p}{)}
+                    \PY{n}{a} \PY{o}{=} \PY{n}{acc}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index} \PY{o}{\PYZhy{}} \PY{l+m+mi}{25} \PY{o}{+} \PY{n}{i} \PY{p}{:} \PY{n}{index} \PY{o}{+} \PY{l+m+mi}{25} \PY{o}{+} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                    \PY{n}{g} \PY{o}{=} \PY{n}{gyr}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index} \PY{o}{\PYZhy{}} \PY{l+m+mi}{25} \PY{o}{+} \PY{n}{i}\PY{p}{:}\PY{n}{index} \PY{o}{+} \PY{l+m+mi}{25} \PY{o}{+} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                    \PY{n}{q} \PY{o}{=} \PY{n}{quaternion}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index} \PY{o}{\PYZhy{}} \PY{l+m+mi}{25} \PY{o}{+} \PY{n}{i} \PY{p}{:} \PY{n}{index} \PY{o}{+} \PY{l+m+mi}{25} \PY{o}{+} \PY{n}{i}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                    \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                    \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{q}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                    \PY{n}{x\PYZus{}features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+                    \PY{n}{y\PYZus{}label}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Y\PYZus{}value}\PY{p}{)}
+                    
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x\PYZus{}features}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{y\PYZus{}label}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{noSwingDataAugmenation}\PY{p}{(}\PY{n}{data}\PY{p}{,} \PY{n}{Y\PYZus{}value}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{no\PYZus{}swing}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{sample\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{4000}\PY{p}{)}\PY{p}{:}
+            \PY{n}{x\PYZus{}features}\PY{p}{,} \PY{n}{y\PYZus{}label} \PY{o}{=} \PY{p}{[}\PY{p}{]}\PY{p}{,} \PY{p}{[}\PY{p}{]}
+            \PY{n}{startIndex} \PY{o}{=} \PY{l+m+mi}{5}
+            \PY{n}{endIndex} \PY{o}{=} \PY{n}{data}\PY{o}{.}\PY{n}{shape}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}\PY{o}{\PYZhy{}}\PY{l+m+mi}{1}
+        
+            \PY{k}{while}\PY{p}{(}\PY{n}{startIndex}\PY{o}{\PYZlt{}}\PY{n}{endIndex} \PY{o+ow}{and} \PY{n}{endIndex}\PY{o}{\PYZhy{}}\PY{n}{startIndex} \PY{o}{\PYZgt{}} \PY{l+m+mi}{50}\PY{p}{)}\PY{p}{:}
+                \PY{n}{a} \PY{o}{=} \PY{n}{acc}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{startIndex}\PY{p}{:}\PY{n}{startIndex} \PY{o}{+} \PY{l+m+mi}{50}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                \PY{n}{g} \PY{o}{=} \PY{n}{gyr}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{startIndex}\PY{p}{:}\PY{n}{startIndex} \PY{o}{+} \PY{l+m+mi}{50}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                \PY{n}{q} \PY{o}{=} \PY{n}{quaternion}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{startIndex}\PY{p}{:}\PY{n}{startIndex} \PY{o}{+} \PY{l+m+mi}{50}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                \PY{n}{y\PYZus{}label}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{Y\PYZus{}value}\PY{p}{)}
+                \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{q}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n}{x\PYZus{}features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+        
+                \PY{n}{startIndex} \PY{o}{+}\PY{o}{=} \PY{l+m+mi}{15}\PY{p}{;}
+                \PY{k}{if}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{x\PYZus{}features}\PY{p}{)} \PY{o}{==} \PY{n}{sample\PYZus{}size}\PY{p}{)}\PY{p}{:}
+                    \PY{k}{break}\PY{p}{;}
+            
+            \PY{n}{X\PYZus{}input}\PY{p}{,} \PY{n}{y\PYZus{}output} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{x\PYZus{}features}\PY{p}{)}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{y\PYZus{}label}\PY{p}{)}
+            \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{y1}\PY{p}{,} \PY{n}{y2} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{X\PYZus{}input}\PY{p}{,} 
+                                                \PY{n}{y\PYZus{}output}\PY{p}{,} 
+                                                \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.3}\PY{p}{,} 
+                                                \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{shuffle}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}
+            \PY{n}{x2}\PY{p}{,} \PY{n}{x3}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{y3} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{x2}\PY{p}{,} \PY{n}{y2}\PY{p}{,}
+                                            \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.5}\PY{p}{,} \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+            
+            \PY{k}{return} \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{x3}\PY{p}{,} \PY{n}{y1}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{y3}
+        
+        
+        \PY{k}{def} \PY{n+nf}{generate\PYZus{}one\PYZus{}hot\PYZus{}label}\PY{p}{(}\PY{n}{y}\PY{p}{,} \PY{n}{label\PYZus{}count}\PY{p}{)}\PY{p}{:}
+            \PY{n}{label\PYZus{}encoder} \PY{o}{=} \PY{n}{LabelEncoder}\PY{p}{(}\PY{p}{)}
+            \PY{n}{integer\PYZus{}encoded} \PY{o}{=} \PY{n}{label\PYZus{}encoder}\PY{o}{.}\PY{n}{fit\PYZus{}transform}\PY{p}{(}\PY{n}{y}\PY{p}{)}
+            \PY{n}{swing\PYZus{}targets} \PY{o}{=} \PY{n}{np\PYZus{}utils}\PY{o}{.}\PY{n}{to\PYZus{}categorical}\PY{p}{(}\PY{n}{integer\PYZus{}encoded}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{swing\PYZus{}types}\PY{p}{)}\PY{p}{)}
+            \PY{k}{return} \PY{n}{swing\PYZus{}targets}
+                
+        
+            
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{total swing type count}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{stroke\PYZus{}y}\PY{p}{[}\PY{n}{swingMidIndex}\PY{p}{]}\PY{o}{.}\PY{n}{value\PYZus{}counts}\PY{p}{(}\PY{p}{)}\PY{p}{)}  
+        \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{X\PYZus{}val}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}val} \PY{o}{=} \PY{n}{generate\PYZus{}train\PYZus{}test\PYZus{}swingIndex}\PY{p}{(}
+                                \PY{n}{swingMidIndex}\PY{p}{,} \PY{n}{swing\PYZus{}types}\PY{p}{)}
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{training swing count }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{return\PYZus{}counts}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{)}
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{test swing count }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{return\PYZus{}counts}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{)}
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{val swing count }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}val}\PY{p}{,} \PY{n}{return\PYZus{}counts}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{swingDataAugmenation}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}\PY{p}{)}
+        \PY{n}{X\PYZus{}val}\PY{p}{,} \PY{n}{y\PYZus{}val} \PY{o}{=} \PY{n}{swingDataAugmenation}\PY{p}{(}\PY{n}{X\PYZus{}val}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}\PY{p}{)}
+        \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{swingDataAugmenation}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{o}{.}\PY{n}{astype}\PY{p}{(}\PY{n+nb}{int}\PY{p}{)}\PY{p}{)}
+        
+        
+        
+        
+        \PY{c+c1}{\PYZsh{}\PYZsh{} adding noswing data to training set:}
+        \PY{n}{x1}\PY{p}{,} \PY{n}{x2}\PY{p}{,} \PY{n}{x3}\PY{p}{,} \PY{n}{y1}\PY{p}{,} \PY{n}{y2}\PY{p}{,} \PY{n}{y3} \PY{o}{=} \PY{n}{noSwingDataAugmenation}\PY{p}{(}\PY{n}{noswing}\PY{p}{)}
+        
+        \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{x1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{X\PYZus{}test} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{x2}\PY{p}{)}\PY{p}{)}
+        \PY{n}{X\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{X\PYZus{}val}\PY{p}{,} \PY{n}{x3}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y1}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{y2}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{y\PYZus{}val}\PY{p}{,} \PY{n}{y3}\PY{p}{)}\PY{p}{)}
+        
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{After agumentation training swing count }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{return\PYZus{}counts}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{)}
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{After agumentation test swing count }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n}{return\PYZus{}counts}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{)}
+        \PY{k}{print} \PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{After agumentation val swing count }\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{np}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{n}{y\PYZus{}val}\PY{p}{,} \PY{n}{return\PYZus{}counts}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{)}\PY{p}{)}
+        
+        \PY{n}{X\PYZus{}train} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}
+        \PY{n}{X\PYZus{}val} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{X\PYZus{}val}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}
+        \PY{n}{X\PYZus{}test} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{,} \PY{l+m+mi}{4}\PY{p}{)}
+        
+        \PY{n}{y\PYZus{}train} \PY{o}{=} \PY{n}{generate\PYZus{}one\PYZus{}hot\PYZus{}label}\PY{p}{(}\PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{swing\PYZus{}types}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{generate\PYZus{}one\PYZus{}hot\PYZus{}label}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{swing\PYZus{}types}\PY{p}{)}\PY{p}{)}
+        \PY{n}{y\PYZus{}val} \PY{o}{=} \PY{n}{generate\PYZus{}one\PYZus{}hot\PYZus{}label}\PY{p}{(}\PY{n}{y\PYZus{}val}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{swing\PYZus{}types}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+('total swing type count', backhand\_slice      204
+forehand\_topspin    132
+backhand\_topspin    112
+serve               110
+forehand\_slice       63
+Name: stroke, dtype: int64)
+('training swing count ', (array(['backhand\_slice', 'backhand\_topspin', 'forehand\_slice',
+       'forehand\_topspin', 'serve'], dtype=object), array([142,  78,  44,  92,  77])))
+('test swing count ', (array(['backhand\_slice', 'backhand\_topspin', 'forehand\_slice',
+       'forehand\_topspin', 'serve'], dtype=object), array([31, 17,  9, 20, 16])))
+('val swing count ', (array(['backhand\_slice', 'backhand\_topspin', 'forehand\_slice',
+       'forehand\_topspin', 'serve'], dtype=object), array([31, 17, 10, 20, 17])))
+('After agumentation training swing count ', (array(['backhand\_slice', 'backhand\_topspin', 'forehand\_slice',
+       'forehand\_topspin', 'no\_swing', 'serve'], dtype='|S16'), array([5680, 3120, 1760, 3680, 2800, 3080])))
+('After agumentation test swing count ', (array(['backhand\_slice', 'backhand\_topspin', 'forehand\_slice',
+       'forehand\_topspin', 'no\_swing', 'serve'], dtype='|S16'), array([1240,  680,  360,  800,  600,  640])))
+('After agumentation val swing count ', (array(['backhand\_slice', 'backhand\_topspin', 'forehand\_slice',
+       'forehand\_topspin', 'no\_swing', 'serve'], dtype='|S16'), array([1240,  680,  400,  800,  600,  680])))
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+/Users/shafidayatar/anaconda/envs/python2.7-DA/lib/python2.7/site-packages/ipykernel\_launcher.py:135: DeprecationWarning: Both axis > a.ndim and axis < -a.ndim - 1 are deprecated and will raise an AxisError in the future.
+/Users/shafidayatar/anaconda/envs/python2.7-DA/lib/python2.7/site-packages/ipykernel\_launcher.py:136: DeprecationWarning: Both axis > a.ndim and axis < -a.ndim - 1 are deprecated and will raise an AxisError in the future.
+/Users/shafidayatar/anaconda/envs/python2.7-DA/lib/python2.7/site-packages/ipykernel\_launcher.py:137: DeprecationWarning: Both axis > a.ndim and axis < -a.ndim - 1 are deprecated and will raise an AxisError in the future.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{n}{model} \PY{o}{=} \PY{n}{Sequential}\PY{p}{(}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Conv2D}\PY{p}{(}\PY{l+m+mi}{16}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{padding}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{same}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{input\PYZus{}shape}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{10}\PY{p}{,}\PY{l+m+mi}{50}\PY{p}{,}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}model.add(BatchNormalization())}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Conv2D}\PY{p}{(}\PY{l+m+mi}{32}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{padding}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{same}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{kernel\PYZus{}initializer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{truncated\PYZus{}normal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}model.add(BatchNormalization())}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Conv2D}\PY{p}{(}\PY{l+m+mi}{64}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{kernel\PYZus{}initializer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{truncated\PYZus{}normal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}model.add(BatchNormalization())}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Conv2D}\PY{p}{(}\PY{l+m+mi}{128}\PY{p}{,} \PY{l+m+mi}{3}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{kernel\PYZus{}initializer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{truncated\PYZus{}normal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}model.add(BatchNormalization())}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{GlobalAveragePooling2D}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{64}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{kernel\PYZus{}initializer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{truncated\PYZus{}normal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{l+m+mi}{64}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{relu}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{kernel\PYZus{}initializer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{truncated\PYZus{}normal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         
+         \PY{n}{model}\PY{o}{.}\PY{n}{add}\PY{p}{(}\PY{n}{Dense}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{swing\PYZus{}types}\PY{p}{)}\PY{p}{,} \PY{n}{activation}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{softmax}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{kernel\PYZus{}initializer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{truncated\PYZus{}normal}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}\PY{p}{)}
+         
+         
+         \PY{n}{model}\PY{o}{.}\PY{n}{compile}\PY{p}{(}\PY{n}{loss} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{categorical\PYZus{}crossentropy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{optimizer}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{adam}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{metrics}\PY{o}{=}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+         
+         \PY{n}{model}\PY{o}{.}\PY{n}{summary}\PY{p}{(}\PY{p}{)}
+         \PY{c+c1}{\PYZsh{}plot\PYZus{}model(model, to\PYZus{}file=\PYZsq{}model\PYZus{}plot.png\PYZsq{}, show\PYZus{}shapes=True, show\PYZus{}layer\PYZus{}names=True)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+Layer (type)                 Output Shape              Param \#   
+=================================================================
+conv2d\_9 (Conv2D)            (None, 10, 50, 16)        160       
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv2d\_10 (Conv2D)           (None, 10, 50, 32)        4640      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv2d\_11 (Conv2D)           (None, 8, 48, 64)         18496     
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+conv2d\_12 (Conv2D)           (None, 6, 46, 128)        73856     
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+global\_average\_pooling2d\_3 ( (None, 128)               0         
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_7 (Dense)              (None, 64)                8256      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_8 (Dense)              (None, 64)                4160      
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+dense\_9 (Dense)              (None, 6)                 390       
+=================================================================
+Total params: 109,958
+Trainable params: 109,958
+Non-trainable params: 0
+\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_\_
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:}  \PY{c+c1}{\PYZsh{}X\PYZus{}train, X\PYZus{}test, y\PYZus{}train, y\PYZus{}test}
+        \PY{c+c1}{\PYZsh{}X\PYZus{}train = X\PYZus{}train.expand\PYZus{}dims(n=4)}
+        \PY{n}{filepath}\PY{o}{=}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{checkpoints/swing\PYZus{}detection\PYZus{}best\PYZus{}weights.hdf5}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{checkpoint} \PY{o}{=} \PY{n}{ModelCheckpoint}\PY{p}{(}\PY{n}{filepath}\PY{p}{,} \PY{n}{monitor}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,} \PY{n}{save\PYZus{}best\PYZus{}only}\PY{o}{=}\PY{n+nb+bp}{True}\PY{p}{,} \PY{n}{mode}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{min}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{trained} \PY{o}{=} \PY{n}{model}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{epochs}\PY{o}{=}\PY{l+m+mi}{5}\PY{p}{,} \PY{n}{batch\PYZus{}size}\PY{o}{=}\PY{l+m+mi}{20}\PY{p}{,} 
+                            \PY{n}{validation\PYZus{}data}\PY{o}{=}\PY{p}{(}\PY{n}{X\PYZus{}val}\PY{p}{,} \PY{n}{y\PYZus{}val}\PY{p}{)}\PY{p}{,} \PY{n}{callbacks}\PY{o}{=}\PY{p}{[}\PY{n}{checkpoint}\PY{p}{]}\PY{p}{,}
+                            \PY{n}{verbose}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Train on 20120 samples, validate on 4400 samples
+Epoch 1/5
+20120/20120 [==============================] - 60s 3ms/step - loss: 0.2586 - acc: 0.9191 - val\_loss: 0.1510 - val\_acc: 0.9670
+
+Epoch 00001: val\_loss improved from inf to 0.15097, saving model to checkpoints/swing\_detection\_best\_weights.hdf5
+Epoch 2/5
+20120/20120 [==============================] - 60s 3ms/step - loss: 0.0835 - acc: 0.9773 - val\_loss: 0.1082 - val\_acc: 0.9766
+
+Epoch 00002: val\_loss improved from 0.15097 to 0.10824, saving model to checkpoints/swing\_detection\_best\_weights.hdf5
+Epoch 3/5
+20120/20120 [==============================] - 59s 3ms/step - loss: 0.0666 - acc: 0.9811 - val\_loss: 0.1736 - val\_acc: 0.9732
+
+Epoch 00003: val\_loss did not improve from 0.10824
+Epoch 4/5
+20120/20120 [==============================] - 60s 3ms/step - loss: 0.0598 - acc: 0.9836 - val\_loss: 0.1239 - val\_acc: 0.9757
+
+Epoch 00004: val\_loss did not improve from 0.10824
+Epoch 5/5
+20120/20120 [==============================] - 59s 3ms/step - loss: 0.0586 - acc: 0.9841 - val\_loss: 0.0887 - val\_acc: 0.9736
+
+Epoch 00005: val\_loss improved from 0.10824 to 0.08875, saving model to checkpoints/swing\_detection\_best\_weights.hdf5
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{c+c1}{\PYZsh{} list all data in history}
+        \PY{k}{print}\PY{p}{(}\PY{n}{trained}\PY{o}{.}\PY{n}{history}\PY{o}{.}\PY{n}{keys}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} summarize history for accuracy}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{trained}\PY{o}{.}\PY{n}{history}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{trained}\PY{o}{.}\PY{n}{history}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val\PYZus{}acc}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{accuracy}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+        \PY{c+c1}{\PYZsh{} summarize history for loss}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{trained}\PY{o}{.}\PY{n}{history}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{plot}\PY{p}{(}\PY{n}{trained}\PY{o}{.}\PY{n}{history}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{val\PYZus{}loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{title}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{ylabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{loss}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{xlabel}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{epoch}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{legend}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{train}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{test}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{loc}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{upper left}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{plt}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+['acc', 'loss', 'val\_acc', 'val\_loss']
+
+    \end{Verbatim}
+
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_15_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{c+c1}{\PYZsh{}}
+         \PY{n}{model}\PY{o}{.}\PY{n}{load\PYZus{}weights}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{checkpoints/swing\PYZus{}detection\PYZus{}best\PYZus{}weights.hdf5}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+         \PY{n}{model\PYZus{}prediction} \PY{o}{=} \PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{test\PYZus{}vector}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{test\PYZus{}vector} \PY{o+ow}{in} \PY{n}{X\PYZus{}test}\PY{p}{]}
+         \PY{n}{test\PYZus{}accuracy} \PY{o}{=} \PY{l+m+mi}{100}\PY{o}{*}\PY{n}{np}\PY{o}{.}\PY{n}{sum}\PY{p}{(}\PY{n}{model\PYZus{}prediction}\PY{o}{==}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{)}\PY{o}{/}\PY{n+nb}{len}\PY{p}{(}\PY{n}{model\PYZus{}prediction}\PY{p}{)}
+         \PY{k}{print}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Test accuracy: }\PY{l+s+si}{\PYZpc{}.4f}\PY{l+s+si}{\PYZpc{}\PYZpc{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{\PYZpc{}} \PY{n}{test\PYZus{}accuracy}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Test accuracy: 97.0000\%
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{k}{def} \PY{n+nf}{export\PYZus{}model\PYZus{}for\PYZus{}mobile}\PY{p}{(}\PY{n}{model\PYZus{}name}\PY{p}{,} \PY{n}{input\PYZus{}node\PYZus{}names}\PY{p}{,} \PY{n}{output\PYZus{}node\PYZus{}name}\PY{p}{)}\PY{p}{:}
+             \PY{n}{K}\PY{o}{.}\PY{n}{set\PYZus{}learning\PYZus{}phase}\PY{p}{(}\PY{l+m+mi}{0}\PY{p}{)}
+             \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{write\PYZus{}graph}\PY{p}{(}\PY{n}{K}\PY{o}{.}\PY{n}{get\PYZus{}session}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{graph\PYZus{}def}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PYZbs{}
+                 \PY{n}{model\PYZus{}name} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}graph.pbtxt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{Saver}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{save}\PY{p}{(}\PY{n}{K}\PY{o}{.}\PY{n}{get\PYZus{}session}\PY{p}{(}\PY{p}{)}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{model\PYZus{}name} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.chkp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+         
+             \PY{k}{print} \PY{p}{(}\PY{n}{freeze\PYZus{}graph}\PY{o}{.}\PY{n}{freeze\PYZus{}graph}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{model\PYZus{}name} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{\PYZus{}graph.pbtxt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb+bp}{None}\PY{p}{,} \PYZbs{}
+                 \PY{n+nb+bp}{False}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out/}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{model\PYZus{}name} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.chkp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{output\PYZus{}node\PYZus{}name}\PY{p}{,} \PYZbs{}
+                 \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{save/restore\PYZus{}all}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{save/Const:0}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PYZbs{}
+                 \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out/frozen\PYZus{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{model\PYZus{}name} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.pb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n+nb+bp}{True}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{input\PYZus{}graph\PYZus{}def} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{GraphDef}\PY{p}{(}\PY{p}{)}
+             \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{gfile}\PY{o}{.}\PY{n}{Open}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out/frozen\PYZus{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{model\PYZus{}name} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.pb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{rb}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                 \PY{n}{input\PYZus{}graph\PYZus{}def}\PY{o}{.}\PY{n}{ParseFromString}\PY{p}{(}\PY{n}{f}\PY{o}{.}\PY{n}{read}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+         
+             \PY{n}{output\PYZus{}graph\PYZus{}def} \PY{o}{=} \PY{n}{optimize\PYZus{}for\PYZus{}inference\PYZus{}lib}\PY{o}{.}\PY{n}{optimize\PYZus{}for\PYZus{}inference}\PY{p}{(}
+                     \PY{n}{input\PYZus{}graph\PYZus{}def}\PY{p}{,} \PY{n}{input\PYZus{}node\PYZus{}names}\PY{p}{,} \PY{p}{[}\PY{n}{output\PYZus{}node\PYZus{}name}\PY{p}{]}\PY{p}{,}
+                     \PY{n}{tf}\PY{o}{.}\PY{n}{float32}\PY{o}{.}\PY{n}{as\PYZus{}datatype\PYZus{}enum}\PY{p}{)}
+         
+             \PY{k}{with} \PY{n}{tf}\PY{o}{.}\PY{n}{gfile}\PY{o}{.}\PY{n}{FastGFile}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{out/tensorflow\PYZus{}lite\PYZus{}}\PY{l+s+s1}{\PYZsq{}} \PY{o}{+} \PY{n}{model\PYZus{}name} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{.pb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{wb}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)} \PY{k}{as} \PY{n}{f}\PY{p}{:}
+                 \PY{n}{f}\PY{o}{.}\PY{n}{write}\PY{p}{(}\PY{n}{output\PYZus{}graph\PYZus{}def}\PY{o}{.}\PY{n}{SerializeToString}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+                 
+         
+                 
+         \PY{n}{export\PYZus{}model\PYZus{}for\PYZus{}mobile}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{stroke\PYZus{}prediction}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{conv2d\PYZus{}1\PYZus{}input}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{dense\PYZus{}3/Softmax}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+INFO:tensorflow:Restoring parameters from out/stroke\_prediction.chkp
+INFO:tensorflow:Froze 14 variables.
+Converted 14 variables to const ops.
+None
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         \PY{l+s+sd}{Convert model.ckpt to model.pb}
+         \PY{l+s+sd}{\PYZdq{}\PYZdq{}\PYZdq{}}
+         
+         \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k+kn}{import} \PY{n}{absolute\PYZus{}import}
+         \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k+kn}{import} \PY{n}{division}
+         \PY{k+kn}{from} \PY{n+nn}{\PYZus{}\PYZus{}future\PYZus{}\PYZus{}} \PY{k+kn}{import} \PY{n}{print\PYZus{}function}
+         
+         \PY{k+kn}{import} \PY{n+nn}{tensorflow} \PY{k+kn}{as} \PY{n+nn}{tf}
+         \PY{k+kn}{from} \PY{n+nn}{tensorflow.python.framework} \PY{k+kn}{import} \PY{n}{graph\PYZus{}util}
+         
+         \PY{c+c1}{\PYZsh{} create a session}
+         \PY{n}{sess} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{Session}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} import best model}
+         \PY{n}{saver} \PY{o}{=} \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{import\PYZus{}meta\PYZus{}graph}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model.ckpt.meta}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} graph}
+         \PY{n}{saver}\PY{o}{.}\PY{n}{restore}\PY{p}{(}\PY{n}{sess}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model.ckpt}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)} \PY{c+c1}{\PYZsh{} variables}
+         
+         \PY{c+c1}{\PYZsh{} get graph definition}
+         \PY{n}{gd} \PY{o}{=} \PY{n}{sess}\PY{o}{.}\PY{n}{graph}\PY{o}{.}\PY{n}{as\PYZus{}graph\PYZus{}def}\PY{p}{(}\PY{p}{)}
+         
+         \PY{c+c1}{\PYZsh{} fix batch norm nodes}
+         \PY{k}{for} \PY{n}{node} \PY{o+ow}{in} \PY{n}{gd}\PY{o}{.}\PY{n}{node}\PY{p}{:}
+           \PY{k}{if} \PY{n}{node}\PY{o}{.}\PY{n}{op} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{RefSwitch}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+             \PY{n}{node}\PY{o}{.}\PY{n}{op} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Switch}\PY{l+s+s1}{\PYZsq{}}
+             \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n+nb}{xrange}\PY{p}{(}\PY{n+nb}{len}\PY{p}{(}\PY{n}{node}\PY{o}{.}\PY{n}{input}\PY{p}{)}\PY{p}{)}\PY{p}{:}
+               \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{moving\PYZus{}}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{node}\PY{o}{.}\PY{n}{input}\PY{p}{[}\PY{n}{index}\PY{p}{]}\PY{p}{:}
+                 \PY{n}{node}\PY{o}{.}\PY{n}{input}\PY{p}{[}\PY{n}{index}\PY{p}{]} \PY{o}{=} \PY{n}{node}\PY{o}{.}\PY{n}{input}\PY{p}{[}\PY{n}{index}\PY{p}{]} \PY{o}{+} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/read}\PY{l+s+s1}{\PYZsq{}}
+           \PY{k}{elif} \PY{n}{node}\PY{o}{.}\PY{n}{op} \PY{o}{==} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{AssignSub}\PY{l+s+s1}{\PYZsq{}}\PY{p}{:}
+             \PY{n}{node}\PY{o}{.}\PY{n}{op} \PY{o}{=} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sub}\PY{l+s+s1}{\PYZsq{}}
+             \PY{k}{if} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{use\PYZus{}locking}\PY{l+s+s1}{\PYZsq{}} \PY{o+ow}{in} \PY{n}{node}\PY{o}{.}\PY{n}{attr}\PY{p}{:} \PY{k}{del} \PY{n}{node}\PY{o}{.}\PY{n}{attr}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{use\PYZus{}locking}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+         
+         \PY{c+c1}{\PYZsh{} generate protobuf}
+         \PY{n}{converted\PYZus{}graph\PYZus{}def} \PY{o}{=} \PY{n}{graph\PYZus{}util}\PY{o}{.}\PY{n}{convert\PYZus{}variables\PYZus{}to\PYZus{}constants}\PY{p}{(}\PY{n}{sess}\PY{p}{,} \PY{n}{gd}\PY{p}{,} \PY{p}{[}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{logits\PYZus{}set}\PY{l+s+s2}{\PYZdq{}}\PY{p}{]}\PY{p}{)}
+         \PY{n}{tf}\PY{o}{.}\PY{n}{train}\PY{o}{.}\PY{n}{write\PYZus{}graph}\PY{p}{(}\PY{n}{converted\PYZus{}graph\PYZus{}def}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{/path/to/save/}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{model.pb}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{as\PYZus{}text}\PY{o}{=}\PY{n+nb+bp}{False}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+
+        ---------------------------------------------------------------------------
+
+        IOError                                   Traceback (most recent call last)
+
+        <ipython-input-12-73bead7bbb88> in <module>()
+         14 
+         15 \# import best model
+    ---> 16 saver = tf.train.import\_meta\_graph('model.ckpt.meta') \# graph
+         17 saver.restore(sess, 'model.ckpt') \# variables
+         18 
+
+
+        /Users/shafidayatar/anaconda/envs/python2.7-DA/lib/python2.7/site-packages/tensorflow/python/training/saver.pyc in import\_meta\_graph(meta\_graph\_or\_file, clear\_devices, import\_scope, **kwargs)
+       1945                        "execution is enabled.")
+       1946   if not isinstance(meta\_graph\_or\_file, meta\_graph\_pb2.MetaGraphDef):
+    -> 1947     meta\_graph\_def = meta\_graph.read\_meta\_graph\_file(meta\_graph\_or\_file)
+       1948   else:
+       1949     meta\_graph\_def = meta\_graph\_or\_file
+
+
+        /Users/shafidayatar/anaconda/envs/python2.7-DA/lib/python2.7/site-packages/tensorflow/python/framework/meta\_graph.pyc in read\_meta\_graph\_file(filename)
+        630   meta\_graph\_def = meta\_graph\_pb2.MetaGraphDef()
+        631   if not file\_io.file\_exists(filename):
+    --> 632     raise IOError("File \%s does not exist." \% filename)
+        633   \# First try to read it as a binary file.
+        634   file\_content = file\_io.FileIO(filename, "rb").read()
+
+
+        IOError: File model.ckpt.meta does not exist.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{o}{!}ls temp\PYZus{}data
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{file\PYZus{}name} \PY{o}{=} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{temp\PYZus{}data/}\PY{l+s+s2}{\PYZdq{}} \PY{o}{+} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{test\PYZus{}dhruvi\PYZus{}set3\PYZus{}4\PYZus{}fht\PYZus{}2\PYZus{}bht\PYZus{}1\PYZus{}bhs.csv}\PY{l+s+s2}{\PYZdq{}}
+        \PY{n}{test\PYZus{}file} \PY{o}{=} \PY{n}{load\PYZus{}file}\PY{p}{(}\PY{n}{file\PYZus{}name}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{forehand\PYZus{}slice}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+        
+        
+        \PY{c+c1}{\PYZsh{}stroke\PYZus{}data = merge\PYZus{}data(forehand\PYZus{}topspin, backhand\PYZus{}topspin)}
+        \PY{c+c1}{\PYZsh{}stroke\PYZus{}data = merge\PYZus{}data(stroke\PYZus{}data, backhand\PYZus{}slice)}
+        \PY{n}{test\PYZus{}time}\PY{p}{,} \PY{n}{test\PYZus{}gyr}\PY{p}{,} \PY{n}{test\PYZus{}acc}\PY{p}{,} \PY{n}{test\PYZus{}quaternion}  \PY{o}{=} \PY{n}{get\PYZus{}lables}\PY{p}{(}\PY{n}{test\PYZus{}file}\PY{p}{)}
+        \PY{n}{test\PYZus{}time} \PY{o}{=} \PY{n}{test\PYZus{}time}\PY{o}{.}\PY{n}{cumsum}\PY{p}{(}\PY{p}{)}
+        
+        \PY{n}{testSwing} \PY{o}{=} \PY{n}{StrokeDetection}\PY{o}{.}\PY{n}{identifyStroke}\PY{p}{(}\PY{n}{test\PYZus{}time}\PY{p}{,} \PY{n}{test\PYZus{}acc}\PY{p}{)}
+        \PY{n}{t\PYZus{}sm}\PY{p}{,} \PY{n}{t\PYZus{}ss}\PY{p}{,} \PY{n}{t\PYZus{}se}\PY{p}{,} \PY{n}{t\PYZus{}sp} \PY{o}{=} \PY{n}{StrokeDetection}\PY{o}{.}\PY{n}{strokeIndexes}\PY{p}{(}\PY{n}{testSwing}\PY{p}{)}
+        
+        \PY{k}{def} \PY{n+nf}{getTestSwing}\PY{p}{(}\PY{n}{x}\PY{p}{)}\PY{p}{:}
+            \PY{n}{test\PYZus{}features} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+            \PY{k}{for} \PY{n}{index} \PY{o+ow}{in} \PY{n}{x}\PY{p}{:} 
+                \PY{n}{Y\PYZus{}value} \PY{o}{=} \PY{n}{stroke\PYZus{}y}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{p}{]}
+                \PY{n}{a} \PY{o}{=} \PY{n}{test\PYZus{}acc}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{o}{\PYZhy{}}\PY{l+m+mi}{25}\PY{p}{:}\PY{n}{index}\PY{o}{+}\PY{l+m+mi}{25}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                \PY{n}{g} \PY{o}{=} \PY{n}{test\PYZus{}gyr}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{o}{\PYZhy{}}\PY{l+m+mi}{25}\PY{p}{:}\PY{n}{index}\PY{o}{+}\PY{l+m+mi}{25}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                \PY{n}{q} \PY{o}{=} \PY{n}{test\PYZus{}quaternion}\PY{o}{.}\PY{n}{iloc}\PY{p}{[}\PY{n}{index}\PY{o}{\PYZhy{}}\PY{l+m+mi}{25}\PY{p}{:}\PY{n}{index}\PY{o}{+}\PY{l+m+mi}{25}\PY{p}{]}\PY{o}{.}\PY{n}{as\PYZus{}matrix}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{T}
+                \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{g}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n}{a} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{concatenate}\PY{p}{(}\PY{p}{(}\PY{n}{a}\PY{p}{,}\PY{n}{q}\PY{p}{)}\PY{p}{,} \PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{0}\PY{p}{)}
+                \PY{n}{test\PYZus{}features}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{n}{a}\PY{p}{)}
+            \PY{k}{return} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{n}{test\PYZus{}features}\PY{p}{)}
+        
+        \PY{n}{swing\PYZus{}test} \PY{o}{=} \PY{n}{getTestSwing}\PY{p}{(}\PY{n}{t\PYZus{}sm}\PY{p}{)}
+        
+        \PY{k}{print} \PY{n}{swing\PYZus{}test}\PY{o}{.}\PY{n}{shape}
+        \PY{n}{swing\PYZus{}test} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{swing\PYZus{}test}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}
+        \PY{k}{print} \PY{n}{swing\PYZus{}test}\PY{o}{.}\PY{n}{shape}  
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor} }]:} \PY{n}{model\PYZus{}prediction} \PY{o}{=} \PY{n}{np}\PY{o}{.}\PY{n}{array}\PY{p}{(}\PY{p}{[}\PY{n}{np}\PY{o}{.}\PY{n}{argmax}\PY{p}{(}\PY{n}{model}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{np}\PY{o}{.}\PY{n}{expand\PYZus{}dims}\PY{p}{(}\PY{n}{test\PYZus{}vector}\PY{p}{,} \PY{l+m+mi}{0}\PY{p}{)}\PY{p}{)}\PY{p}{)} \PY{k}{for} \PY{n}{test\PYZus{}vector} \PY{o+ow}{in} \PY{n}{swing\PYZus{}test}\PY{p}{]}\PY{p}{)}
+        
+        \PY{k}{for} \PY{n}{swing\PYZus{}idx} \PY{o+ow}{in} \PY{n}{model\PYZus{}prediction}\PY{p}{:}
+            \PY{k}{print} \PY{n}{swing\PYZus{}types}\PY{p}{[}\PY{n}{swing\PYZus{}idx}\PY{p}{]}
+\end{Verbatim}
+
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
