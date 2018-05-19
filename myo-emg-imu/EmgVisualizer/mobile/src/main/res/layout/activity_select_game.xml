@@ -22,12 +22,14 @@
             android:id="@+id/separator"
             android:text="List OF Games"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="#757678"
             android:textColor="#f5c227" />
 
         <ListView android:id="@android:id/list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_height="match_parent"
+            android:paddingBottom="50dp"
+            android:paddingTop="10dp"/>
     </LinearLayout>
 </LinearLayout>

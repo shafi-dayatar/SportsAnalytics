@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -45,7 +46,8 @@ public class LiveDetect extends AppCompatActivity {
     private Button button;
     private Handler handler;
     private Button endButton;
-    private TextView Error;
+    private Button Serve;
+    private TextView motionData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,25 +59,33 @@ public class LiveDetect extends AppCompatActivity {
         FS = (Button) findViewById(R.id.FS);
         BT = (Button) findViewById(R.id.BT);
         BS = (Button) findViewById(R.id.BS);
+        Serve = (Button) findViewById(R.id.Serve);
+        motionData = (TextView) findViewById(R.id.status);
         handler = new Handler();
         resultMap.setOnEventListener(new ObservableHashMap.OnEventListener() {
             @Override
             public void onPut(ObservableHashMap map, Object key, Object value) {
-                System.out.println("-------------Key is -------------"+ key);
                 if (key.equals(Stroke.ForehandTop.toString())) {
                     button = FT;
+                    motionData.setText(Stroke.ForehandTop.toString());
                 } else if (key.equals(Stroke.ForehandSlice.toString())) {
                     button = FS;
+                    motionData.setText(Stroke.ForehandSlice.toString());
+
                 } else if (key.equals(Stroke.BackhandSlice.toString())) {
                     button = BS;
+                    motionData.setText(Stroke.BackhandSlice.toString());
+
                 } else if (key.equals(Stroke.BackhandTop.toString())) {
                     button = BT;
-                } // TODO comment below lies after new model
-//                else if(key.equals("Backhand")){
-//                    button = BS;
-//                } else if(key.equals("Forehand")){
-//                    button = FS;
-//                }
+                    motionData.setText(Stroke.BackhandTop.toString());
+
+                } else if (key.equals(Stroke.Serve.toString())){
+                    button = Serve;
+                    motionData.setText(Stroke.Serve.toString());
+                } else {
+                    motionData.setText(Stroke.NoSwing.toString());
+                }
                 if (button != null) {
                     System.out.println("Inisde Button ");
                     button.setBackgroundResource(R.drawable.rounded_button2);
@@ -163,6 +173,7 @@ public class LiveDetect extends AppCompatActivity {
                         bundle.putInt(Stroke.BackhandTop.toString(),resultMap.get(Stroke.BackhandTop.toString()));
                         bundle.putInt(Stroke.ForehandSlice.toString(),resultMap.get(Stroke.ForehandSlice.toString()));
                         bundle.putInt(Stroke.ForehandTop.toString(),resultMap.get(Stroke.ForehandTop.toString()));
+                        bundle.putInt(Stroke.Serve.toString(),resultMap.get(Stroke.Serve.toString()));
                         // TODO change after model change
                         intent.putExtras(bundle);
                         startActivity(intent);
@@ -170,9 +181,12 @@ public class LiveDetect extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+
+                Toast.makeText(getApplicationContext(), "Error saving progress!!!",
+                        Toast.LENGTH_LONG).show();
+                /*error.printStackTrace();
                 Error = (TextView) findViewById(it.ncorti.emgvisualizer.R.id.textView5);
-                Error.setText("Error in Saving the progress!!");
+                Error.setText("Error in Saving the progress!!");*/
             }
         }){
             @Override

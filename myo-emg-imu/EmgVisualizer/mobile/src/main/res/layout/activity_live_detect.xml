@@ -14,8 +14,8 @@
 
         <Button
             android:id="@+id/FT"
-            android:layout_width="171dp"
-            android:layout_height="163dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:background="@drawable/rounded_button"
             android:text="Forehand Topspin" />
 
@@ -27,8 +27,8 @@
 
             <Button
                 android:id="@+id/FS"
-                android:layout_width="171dp"
-                android:layout_height="163dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="18dp"
@@ -46,8 +46,8 @@
 
         <Button
             android:id="@+id/BT"
-            android:layout_width="171dp"
-            android:layout_height="163dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:background="@drawable/rounded_button"
             android:text="Backhand Topspin" />
 
@@ -59,8 +59,8 @@
 
             <Button
                 android:id="@+id/BS"
-                android:layout_width="171dp"
-                android:layout_height="163dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginEnd="18dp"
@@ -71,7 +71,7 @@
         </RelativeLayout>
     </RelativeLayout>
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/detecting"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -84,7 +84,7 @@
         android:textAlignment="center"/>
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -104,6 +104,17 @@
         android:layout_marginBottom="42dp"
         android:background="@drawable/rounded_button2"
         android:text="End Game" />
+
+    <Button
+        android:id="@+id/Serve"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="164dp"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="sans-serif-medium"
+        android:text="Serve" />
 
 
 </RelativeLayout>
