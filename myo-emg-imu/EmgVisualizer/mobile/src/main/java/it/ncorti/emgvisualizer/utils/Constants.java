@@ -7,4 +7,5 @@ public class Constants {
     public static final String CREATE_PLAYER = "player";
     public static final String START_GAME = "game";
     public static final String GAME_DATE = "gamebyDate";
+    public static final String WEEKLY_DATA = "gamebyWeek";
 }

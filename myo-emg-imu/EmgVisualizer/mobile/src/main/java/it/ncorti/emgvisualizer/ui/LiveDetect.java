@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,12 +31,15 @@ import it.ncorti.emgvisualizer.DTO.Player;
 import it.ncorti.emgvisualizer.DataAnalysis.PredictionResult;
 import it.ncorti.emgvisualizer.DataAnalysis.Stroke;
 import it.ncorti.emgvisualizer.R;
+import it.ncorti.emgvisualizer.model.Sensor;
 import it.ncorti.emgvisualizer.utils.Constants;
 import it.ncorti.emgvisualizer.utils.ObservableHashMap;
 import it.ncorti.emgvisualizer.utils.Utils;
 
 public class LiveDetect extends AppCompatActivity {
     PredictionResult predictionResult = PredictionResult.getInstance();
+    private Sensor controlledSensor;
+
     ObservableHashMap<String,Integer> resultMap =  predictionResult.getAllResults();
     RequestQueue requestQueue;
     private Button FT;
@@ -45,45 +49,56 @@ public class LiveDetect extends AppCompatActivity {
     private Button button;
     private Handler handler;
     private Button endButton;
-    private TextView Error;
+    private Button Serve;
+    private TextView motionData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestQueue = Volley.newRequestQueue(this);
+        this.controlledSensor = MySensorManager.getInstance().getMyo();
         setContentView(R.layout.activity_live_detect);
         endButton = (Button) findViewById(R.id.button);
         FT = (Button) findViewById(R.id.FT);
         FS = (Button) findViewById(R.id.FS);
         BT = (Button) findViewById(R.id.BT);
         BS = (Button) findViewById(R.id.BS);
+        Serve = (Button) findViewById(R.id.Serve);
+        motionData = (TextView) findViewById(R.id.detecting);
         handler = new Handler();
         resultMap.setOnEventListener(new ObservableHashMap.OnEventListener() {
             @Override
             public void onPut(ObservableHashMap map, Object key, Object value) {
-                System.out.println("-------------Key is -------------"+ key);
+                System.out.println("s")
                 if (key.equals(Stroke.ForehandTop.toString())) {
                     button = FT;
+                    motionData.setText(Stroke.ForehandTop.toString());
                 } else if (key.equals(Stroke.ForehandSlice.toString())) {
                     button = FS;
+                    motionData.setText(Stroke.ForehandSlice.toString());
+
                 } else if (key.equals(Stroke.BackhandSlice.toString())) {
                     button = BS;
+                    motionData.setText(Stroke.BackhandSlice.toString());
+
                 } else if (key.equals(Stroke.BackhandTop.toString())) {
                     button = BT;
-                } // TODO comment below lies after new model
-//                else if(key.equals("Backhand")){
-//                    button = BS;
-//                } else if(key.equals("Forehand")){
-//                    button = FS;
-//                }
-                if (button != null) {
+                    motionData.setText(Stroke.BackhandTop.toString());
+
+                } else if (key.equals(Stroke.Serve.toString())){
+                    button = Serve;
+                    motionData.setText(Stroke.Serve.toString());
+                } else {
+                    motionData.setText(Stroke.NoSwing.toString());
+                }
+                if (button != null && !key.equals(Stroke.NoSwing.toString())) {
                     System.out.println("Inisde Button ");
                     button.setBackgroundResource(R.drawable.rounded_button2);
                     button.setText(key + "  " + value);
 
                     handler.postDelayed(new Runnable() {
                         public void run() {
-                            button.setBackgroundResource(R.drawable.rounded_button);
+                            if(button !=null) button.setBackgroundResource(R.drawable.rounded_button);
                             button = null;
                         }
                     }, 500);
@@ -98,6 +113,7 @@ public class LiveDetect extends AppCompatActivity {
         endButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                controlledSensor.stopMeasurement();
                 dialog.setContentView(R.layout.end_game_save_dialog);
                 dialog.setTitle("Save data");
                 TextView text = (TextView) dialog.findViewById(R.id.textDialogYesNoMessage);
@@ -109,8 +125,9 @@ public class LiveDetect extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
-                        //Enter code to save data
                         saveGame();
+                        predictionResult.resetMap();
+
                     }
                 });
                 Button no = (Button) dialog.findViewById(R.id.btnDialogNo);
@@ -119,7 +136,9 @@ public class LiveDetect extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
                         dialog.dismiss();
-                        //Enter code to delete or dismiss data
+                        predictionResult.resetMap();
+                        Intent intent = new Intent(LiveDetect.this, MainActivity.class);
+                        startActivity(intent);
 
                     }
                 });
@@ -133,7 +152,6 @@ public class LiveDetect extends AppCompatActivity {
         String startTime= bundle.getString("startTime");
         SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String emailId = settings.getString("emailid",null);
-        System.out.println("emailid" + emailId);
         Game game = new Game();
         Player player = new Player();
         player.setEmailid(emailId);
@@ -141,7 +159,6 @@ public class LiveDetect extends AppCompatActivity {
         game.setPlayedOn(Utils.getCurrentDate());
         game.setStartTime(startTime);
         game.setEndTime(Utils.getCurrentTime());
-        // TODO change as per labels
         game.setBackhandSlice(resultMap.get(Stroke.BackhandSlice.toString()));
         game.setBackhandTopspin(resultMap.get(Stroke.BackhandTop.toString()));
         game.setForehandSlice(resultMap.get(Stroke.ForehandSlice.toString()));
@@ -163,16 +180,20 @@ public class LiveDetect extends AppCompatActivity {
                         bundle.putInt(Stroke.BackhandTop.toString(),resultMap.get(Stroke.BackhandTop.toString()));
                         bundle.putInt(Stroke.ForehandSlice.toString(),resultMap.get(Stroke.ForehandSlice.toString()));
                         bundle.putInt(Stroke.ForehandTop.toString(),resultMap.get(Stroke.ForehandTop.toString()));
-                        // TODO change after model change
+                        bundle.putInt(Stroke.Serve.toString(),resultMap.get(Stroke.Serve.toString()));
                         intent.putExtras(bundle);
+                        intent.putExtra("FROM_ACTIVITY", "Live");
                         startActivity(intent);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                error.printStackTrace();
+
+                Toast.makeText(getApplicationContext(), "Error saving progress!!!",
+                        Toast.LENGTH_LONG).show();
+                /*error.printStackTrace();
                 Error = (TextView) findViewById(it.ncorti.emgvisualizer.R.id.textView5);
-                Error.setText("Error in Saving the progress!!");
+                Error.setText("Error in Saving the progress!!");*/
             }
         }){
             @Override
