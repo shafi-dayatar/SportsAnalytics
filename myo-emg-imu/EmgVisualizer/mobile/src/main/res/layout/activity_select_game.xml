@@ -5,10 +5,27 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/t_r">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Game select"
+        android:paddingBottom="10dp"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/ColorWhite"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="Select date of match"
+        android:background="@drawable/rounded_button_3"
+        android:id="@+id/expand"/>
         <CalendarView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/ColorWhite"
+            android:layout_gravity="center_horizontal"
             android:id="@+id/calendar1">
         </CalendarView>
 
@@ -22,12 +39,14 @@
             android:id="@+id/separator"
             android:text="List OF Games"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:background="#757678"
             android:textColor="#f5c227" />
 
         <ListView android:id="@android:id/list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"/>
+        android:layout_height="match_parent"
+            android:paddingBottom="50dp"
+            android:paddingTop="10dp"/>
     </LinearLayout>
 </LinearLayout>
