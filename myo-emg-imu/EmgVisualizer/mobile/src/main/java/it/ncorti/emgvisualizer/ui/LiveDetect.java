@@ -103,6 +103,7 @@ public class LiveDetect extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 controlledSensor.stopMeasurement();
+                predictionResult.resetMap();
                 dialog.setContentView(R.layout.end_game_save_dialog);
                 dialog.setTitle("Save data");
                 TextView text = (TextView) dialog.findViewById(R.id.textDialogYesNoMessage);

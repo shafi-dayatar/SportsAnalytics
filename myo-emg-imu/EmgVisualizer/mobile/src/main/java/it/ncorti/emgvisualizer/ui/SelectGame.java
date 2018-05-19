@@ -120,8 +120,9 @@ public class SelectGame extends ListActivity {
                             JsonParser parser = new JsonParser();
                             JsonObject jsonObject = (JsonObject) parser.parse(response);
                             JsonArray array = jsonObject.getAsJsonArray("responseObject");
+                            gamelist.clear();
                             if(array.size() < 1) {
-
+                                Toast.makeText(getApplicationContext(),"No Games Played on this day",Toast.LENGTH_LONG).show();
                             }
                             for (int i=0;i<array.size();i++){
                                 JsonElement gameObject = array.get(i);

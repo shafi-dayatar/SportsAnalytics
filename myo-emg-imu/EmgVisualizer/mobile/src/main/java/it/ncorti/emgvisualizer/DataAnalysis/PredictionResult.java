@@ -16,6 +16,15 @@ public class PredictionResult {
 
         strokeCount = new HashMap<Stroke, Integer>();
         strokeOutput = new ObservableHashMap();
+        resetMap();
+    }
+    public void resetMap() {
+        strokeOutput.put(Stroke.Serve.toString(),0);
+        strokeOutput.put(Stroke.BackhandTop.toString(),0);
+        strokeOutput.put(Stroke.BackhandSlice.toString(),0);
+        strokeOutput.put(Stroke.ForehandSlice.toString(),0);
+        strokeOutput.put(Stroke.ForehandTop.toString(),0);
+        strokeOutput.put(Stroke.NoSwing.toString(),0);
     }
 
     public static PredictionResult getInstance(){
