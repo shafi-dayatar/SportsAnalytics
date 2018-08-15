@@ -6,24 +6,17 @@ This project is using Deep Learning and AI to improve a players game for racket 
 
 [MYO](https://www.myo.com/) is a wearable technology. It is to be worn on the forearm. It consists of nine axis IMU (accelerometer for direction, a gyroscope for rotation) sensor, and it also has an EMG(electro Myogragpy) sensor which captures the muscle information of your forearm, generated through hand movements.
 
+
 ## Basic workflow of the developement:
 
 ## Data Gathering/Collection
 
-## Data Processing
+We tried to contact the researches using the IMU data for stroke identication but were unable to get data from them so we tryied to generate data on own. To help this we created a tool/app which could get raw data from the device. To accomplish this we used api whichs [Nicola Corti](https://github.com/cortinico/) [github](https://github.com/cortinico/myonnaise).
+Using the tool.
 
-## Data Preparation
+The tool was used extensively while we played tennis wearing the myo on our hand. For this we joined [AVAC tennis club](http://www.avac.us/) in San Jose.
 
-## Implementing Deep Learning Models
-
-## Mobile App Working
-
-
-As this is completely new data, I wasn't able to manage to get data from the internet. I had to generate data on my own. So for this, I created a simple data collection tools which is used to gather the data using the api developed by [Nicola Corti](https://github.com/cortinico/) [github](https://github.com/cortinico/myonnaise), while I play tennis wearing this device on my hand. Now I went to one of the open tennis courts nearby to get the swing data.
-
-
-I tried to figure what kind of data am I getting, do I see any correlation between data. 
-Following is the image of the data that I am getting from accelerometer and gyroscope
+Following is the image of the data that we are getting from accelerometer and gyroscope
 
 ![backhand accelerometer](data_analysis/acc-backand.png)
 
@@ -34,3 +27,10 @@ Following is the image of the data that I am getting from accelerometer and gyro
 
 ![forehand gyro](data_analysis/gyro-topspin-forehand.png)
 
+## Data Understanding
+
+## Data Preparation
+
+## Implementing Deep Learning Models
+
+## Mobile App Working
