@@ -6,6 +6,17 @@ This project is using Deep Learning and AI to improve a players game for racket 
 
 [MYO](https://www.myo.com/) is a wearable technology. It is to be worn on the forearm. It consists of nine axis IMU (accelerometer for direction, a gyroscope for rotation) sensor, and it also has an EMG(electro Myogragpy) sensor which captures the muscle information of your forearm, generated through hand movements.
 
+## Basic workflow of the developement:
+
+## Data Gathering/Collection
+
+## Data Processing
+
+## Data Preparation
+
+## Implementing Deep Learning Models
+
+## Mobile App Working
 
 
 As this is completely new data, I wasn't able to manage to get data from the internet. I had to generate data on my own. So for this, I created a simple data collection tools which is used to gather the data using the api developed by [Nicola Corti](https://github.com/cortinico/) [github](https://github.com/cortinico/myonnaise), while I play tennis wearing this device on my hand. Now I went to one of the open tennis courts nearby to get the swing data.
